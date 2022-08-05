@@ -1,0 +1,16 @@
+export default {
+  title: 'Settings',
+  myOrders: 'My Orders',
+  cart: 'Cart',
+  updateShop: 'Update Shop',
+  createShop: 'Create Shop',
+  accountSettings: 'Account Settings',
+  generalSettings: 'General Settings',
+  darkMode: 'Dark Mode',
+  faceId: 'User Face ID',
+  setupFaceId: 'Setup Face ID',
+  support: 'Support',
+  rate: 'Rate our App',
+  about: 'About the App',
+  logout: 'LOGOUT',
+};
