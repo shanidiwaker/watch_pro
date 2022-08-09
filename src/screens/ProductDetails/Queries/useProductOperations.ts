@@ -191,12 +191,12 @@ const useProductOperations = (productId: number) => {
       queryClient.invalidateQueries(QueryKeys.cartItems);
       queryClient.invalidateQueries(QueryKeys.userProfile);
       Alert.alert('Success', result?.data?.message);
-
+      console.log("Mess",result?.data)
       return result;
       // }
       //  Alert.alert('Error', result?.data.message) // new
 
-      return result;
+     // return result;
     } catch (error) {
       Alert.alert('Error', 'Something went wrong'); // new
 

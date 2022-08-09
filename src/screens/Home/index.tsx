@@ -9,7 +9,7 @@ import {
   ScrollView,
   StatusBar,
   StyleSheet,
-  TouchableOpacity,
+  TouchableOpacity,Alert
 } from 'react-native';
 import MasonryList from '@react-native-seoul/masonry-list';
 import TouchID from 'react-native-touch-id';
@@ -27,9 +27,12 @@ import {
   IResponseDataProduct,
   useFetchCategories,
 } from '../Add/Queries/useFetchCategories';
+
 import {useProductOperations} from './Queries/useProductOperations';
 import {useProductOperations as ProductOperations} from '../ProductDetails/Queries/useProductOperations';
 import Selector from '../../components/LangaugeSelector';
+import ImageResizer from 'react-native-image-resizer';
+
 // import useProduct from './useProduct';
 
 const optionalConfigObject = {
@@ -66,6 +69,8 @@ function Home() {
     );
   }, [categories]);
 
+
+
   React.useEffect(() => {
     TouchID.authenticate('', optionalConfigObject)
       .then((success: string) => {
@@ -76,7 +81,13 @@ function Home() {
         BackHandler.exitApp();
         //
       });
+      resizeImage()
   }, []);
+    
+ 
+  const resizeImage = async() => {
+    var imgUrl = require('../.././assets/images/eye.png')
+}
 
   React.useEffect(() => {
     if (products) {

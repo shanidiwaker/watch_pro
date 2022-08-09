@@ -26,8 +26,10 @@ async function addintoCart(id: number): Promise<IResponseDataAdd | undefined> {
         status: response.status,
       };
     }
+    console.log('response.data')
     return {data: response.data, order_id: '', status: false};
   } catch (error) {
+    console.log('err_response.data')
     return error as IResponseDataAdd;
   }
 }
@@ -87,6 +89,7 @@ const useCartOperations = () => {
   const navigation = useNavigation<RootNavigationType>();
 
   const addtoCart = async (id: number) => {
+    console.log("cart")
     try {
       const result = await addintoCart(id);
       if (result?.data?.message === 'Product Added To Cart!!') {

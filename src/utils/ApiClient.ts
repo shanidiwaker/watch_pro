@@ -13,8 +13,10 @@ client.interceptors.request.use(
   (request: any) => {
     const authRoutes = AUTH_ROUTES.some(i => request.url.includes(i));
     const {token} = store.getState().user;
+   // console.log('token',token)
     if (!authRoutes) {
       // TODO: add token to secure request
+     // console.log('token',token)
       request.headers.Authorization = `Bearer ${token}`;
     }
     return request;

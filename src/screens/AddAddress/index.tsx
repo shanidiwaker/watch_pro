@@ -34,7 +34,8 @@ const validationSchema = Yup.object({
     .trim()
     .min(3, 'Invalid name!')
     .required('Full Address is required!'),
-  state: Yup.string().min(3, 'Invalid state!').required('State is required!'),
+    state: Yup.string().min(3, 'Invalid state!').required('State is required!'),
+  
   phone_no: Yup.string()
     .matches(PHONE_REGEX, 'Phone number is not valid!')
     .required('Please enter mobile'),
@@ -44,11 +45,11 @@ const validationSchema = Yup.object({
 });
 
 interface MyFormValues {
-  firstName: string;
-  lastName: string;
+  //firstName: string;
+ // lastName: string;
   username: string;
   phone_no: string;
-  id?: '';
+  //id?: '';
   full_address: string;
   state: string;
   city: string;
@@ -62,18 +63,6 @@ export default function ShippingAdress(props: ProfileScreenProps) {
   const inset = useSafeAreaInsets();
   const [states, setStates] = useState<any>([]);
   const {addAddress, editAddress} = useSaveAddress();
-
-  // const initialValues = {
-  //   firstName: '',
-  //   lastName: '',
-  //   username: '',
-  //   phone_no: '',
-  //   full_address: '',
-  //   state: '',
-  //   city: '',
-  //   pincode: '',
-  //   country: '',
-  // };
   console.log('data', JSON.stringify(data, null, 2));
   const initialValues = {
     full_address: data?.full_address || '',
@@ -127,7 +116,7 @@ export default function ShippingAdress(props: ProfileScreenProps) {
         height: '100%',
         width: '100%',
         paddingTop: inset.top,
-        paddingHorizontal: 20,
+        paddingHorizontal: 10,
         justifyContent:'center',
         alignItems: 'center',
         backgroundColor: useColorModeValue(
@@ -211,9 +200,10 @@ export default function ShippingAdress(props: ProfileScreenProps) {
               },
             ]}
             onPress={() => {
-              if (!isSubmitting) {
+              console.log("SDa",isSubmitting)
+              //if (!isSubmitting) {
                 handleSubmit();
-              }
+            //  }
             }}>
             {isSubmitting ? (
               <Spinner />

@@ -30,6 +30,7 @@ function Cart() {
   const {collectProduct} = useProductOp(0);
   const inset = useSafeAreaInsets();
   const confirm = useConfirmModal();
+  const [cartitem,setCartItem] = React.useState()
 
   const swipeoutBtns = [
     {
@@ -41,11 +42,17 @@ function Cart() {
       },
     },
   ];
-  const {data: cartItem} = useFetchCartItems();
+
+
+    const {data: cartItem} = useFetchCartItems();
+    
+
+   
 
   const handleContinue = () => {
     navigation.navigate('HomeTabs');
   };
+
   const checkout = () => {
     confirm?.show?.({
       title: <Title fontSize={18}>Confirmation</Title>,
@@ -57,9 +64,12 @@ function Cart() {
       submitLabel: 'Yes',
     });
   };
+
   const handleCollect = async (id: number) => {
-    await collectProduct(id);
+     const data = await collectProduct(id);
+    console.log('data',data.data)
   };
+
   return (
     <View
       style={{
@@ -91,6 +101,7 @@ function Cart() {
           {cartItem && cartItem?.data?.length > 0 ? (
             <>
               {cartItem?.data?.map((item: ICartItems) => {
+                console.log(item)
                 return (
                   <>
                     <Swipeout

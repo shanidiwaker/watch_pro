@@ -1,9 +1,9 @@
 import Config from 'react-native-config';
 
-// const {BASE_URL} = Config;http://watchpro.yourang.io
-const BASE_URL = 'https://codeandcode.xyz/demo/watchpro/api';
+// const {BASE_URL} = Config;http://watchpro.yourang.io/api https://codeandcode.xyz/demo/watchpro/api/
+const BASE_URL = 'http://watchpro.yourang.io/api';
 export const config = {
-  BASE_URL: 'https://codeandcode.xyz/demo/watchpro/api/',
+  BASE_URL: 'http://watchpro.yourang.io/api/',
   AUTH_API_URL: `${BASE_URL}/auth/user/login`,
   APPLE_LOGIN_URL: `${BASE_URL}/auth/user/apple/login`,
   FORGOT_PASSWORD: `${BASE_URL}/auth/user/forgetpassword`,

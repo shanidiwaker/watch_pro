@@ -29,7 +29,8 @@ import {useSubmitShop} from './Queries/useSubmitShop';
 import useUserInfo from '../../hooks/useUserInfo';
 import HeaderSimple from '../../components/HeaderSimple';
 import {useGetShopDetails} from './useGetShopDetails';
-
+import * as imageConversion from 'image-conversion';
+import ImageResizer from 'react-native-image-resizer';
 export interface IMedia {
   uri: string;
   name: string;
@@ -96,6 +97,8 @@ function Add() {
 
   const onSelectImage = (files: IAssetType[]) => {
     /* eslint-disable @typescript-eslint/no-non-null-assertion */
+    console.log(files)
+ 
     const images: IMedia[] =
       values?.images?.length > 0 ? [...values.images] : [];
     if (files.length > 0) {
@@ -103,22 +106,37 @@ function Add() {
         const fileType: string = file.type!;
         const fileSize: number = file.fileSize!;
         const fileUri: string = file.uri!;
+   
+/*         ImageResizer.createResizedImage(file.uri!, 1600, 1600,'JPEG', 20, undefined)
+        .then(response => {
+          console.log(response)
+        })
+        .catch(err => {
+          console.log(err)
+        }); */
 
-        if (fileType.includes('image')) {
-          const fileName: string = file.fileName!;
-          const allowedSize = 5;
-          if (validateImage(fileName, fileType, fileSize, allowedSize)) {
-            images.push({
-              uri: fileUri,
-              type: fileType,
-              name: fileName,
-            });
+          if (fileType.includes('image')) {
+            const fileName: string = file.fileName!;
+            const allowedSize = 5;
+            if (validateImage(fileName, fileType, fileSize, allowedSize)) {
+              images.push({
+                uri: fileUri,
+                type: fileType,
+                name: fileName,
+              });
+            }
           }
-        }
+         
+      
+        console.log('images',fileUri)
+        
         return file;
       });
     }
+
     setFieldValue('images', images);
+
+
   };
   const selectAddMedia = () => {
     mediaPicker.current?.onPickerSelect();

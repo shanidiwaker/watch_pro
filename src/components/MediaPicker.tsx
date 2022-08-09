@@ -21,7 +21,7 @@ import {
   useColorModeValue,
 } from 'native-base';
 import {theme} from '../theme';
-
+import ImageResizer from 'react-native-image-resizer';
 const photoOptions: ImageLibraryOptions = {
   mediaType: 'photo',
   maxWidth: 1600,
@@ -57,7 +57,25 @@ const MediaPicker = forwardRef<IPressHandler, IPickerProps>(
       }
       const image = response?.assets;
       if (image && onSelectImage) {
-        onSelectImage(image);
+     
+        ImageResizer.createResizedImage(image[0].uri!, 1600, 1600,'JPEG', 20, undefined)
+        .then(response => {
+         
+          console.log('image-----',response)
+
+          const dataImage = {
+            "fileName": response.name, 
+            "fileSize": response.size, 
+            "height": response.height, 
+            "type": "image/jpeg", 
+            "uri": response.uri, 
+            "width": response.width}
+          onSelectImage([dataImage]);
+        })
+        .catch(err => {
+          console.log(err)
+        });
+       
       }
     };
 

@@ -98,6 +98,7 @@ async function fetchProductById(id: number): Promise<IProduct | null> {
     const url = `${config.BASE_URL}user/product_by_id`;
 
     const response: IResponse = await client.post(url, {product_id: id});
+    
     if (response.data.length > 0 && response.status === true) {
       return response.data[0];
     }
