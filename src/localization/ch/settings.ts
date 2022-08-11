@@ -1,0 +1,16 @@
+export default {
+  title: '设置',
+  myOrders: '我的订单',
+  cart: '大车',
+  updateShop: '更新商店',
+  createShop: '创建商店',
+  accountSettings: '帐号设定',
+  generalSettings: '通用设置',
+  darkMode: '黑暗模式',
+  faceId: '使用人脸 ID',
+  setupFaceId: '设置面容 ID',
+  support: '支持',
+  rate: '评价我们的应用',
+  about: '关于应用程序',
+  logout: '登出',
+};
