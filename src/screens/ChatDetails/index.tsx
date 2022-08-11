@@ -78,16 +78,18 @@ function ChatDetails(props1: MessageScreenProps) {
   }, [refetch]);
   React.useEffect(() => {
     if (messagesList) {
+      console.log('messagesList',messagesList)
       const tempList: IMessageChat[] = [];
       messagesList?.data?.map((message: IMessageReponse) => {
+        console.log('messages',message?.sender)
         tempList.push({
           _id: message.id,
           text: message.text,
           createdAt: message.created_at,
           user: {
-            _id: message.user.id,
-            name: message.user.name,
-            avatar: message.user.avtar,
+            _id: message.sender.id,
+            name: message.sender.name,
+            avatar: message.sender.avtar,
           },
         });
         return message;

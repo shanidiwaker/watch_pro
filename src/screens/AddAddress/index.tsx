@@ -7,7 +7,7 @@ import {
   StyleSheet,
   TextInput,
   ScrollView,
-  TouchableOpacity,
+  TouchableOpacity,Alert
 } from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
@@ -56,6 +56,7 @@ interface MyFormValues {
   pincode: string;
   country: string;
 }
+
 export default function ShippingAdress(props: ProfileScreenProps) {
   const [t, i18] = useTranslation();
   const {route} = props;
@@ -109,6 +110,12 @@ export default function ShippingAdress(props: ProfileScreenProps) {
   const handleState = (text: string) => {
     setFieldValue('state', text);
   };
+
+  const showAlert = () =>{
+    Alert.alert(
+       'You need to...'
+    )
+ }
 
   return (
     <View

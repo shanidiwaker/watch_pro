@@ -36,7 +36,7 @@ function MyOrders() {
   useEffect(()=>{
     if(myOrders){
     // data()
-    //  console.log(myOrders)
+      console.log(myOrders)
     }
     
   },[])
@@ -66,12 +66,13 @@ function MyOrders() {
     console.log(item.product)
   })
   }
-  const handleProductDetail = (v: any, status: string) => {
+  const handleProductDetail = (v: any[], status: string) => {
 
-    navigation.navigate('ProductDetails', {
+   /*  navigation.navigate('ProductDetails', {
       id: v,
       status,
-    });
+    }); */
+    navigation.navigate('MyOrderDetail',{data:v});
   };
   console.log(moment("2021-07-14T00:00:00.000Z").utc().format('YYYY-MM-DD'));
   return (
@@ -121,9 +122,12 @@ function MyOrders() {
           {product_item && product_item?.length > 0 ? (
             <>
               {product_item?.map((item) => {
-                console.log("item",item.product[0])
+                console.log("items..",item.product[0])
                 var id = item.id
                 var data = item.product[0]
+                if( item.product[0] != null){
+
+                
                 return (
                   <Swipeout
                     right={swipeoutBtns}
@@ -179,7 +183,7 @@ function MyOrders() {
                           Date {moment(data.created_at).utc().format('YYYY-MM-DD')}
                         </Caption>
                         <View
-                          bg={theme.colors.green[500]}
+                          bg="#008080"
                           width={110}
                           borderRadius={4}
                           p={1}>
@@ -195,7 +199,7 @@ function MyOrders() {
                         <TouchableOpacity
                           onPress={() => {
                             handleProductDetail(
-                              data.id,
+                              item,
                               item.status,
                             );
                           }}>
@@ -213,7 +217,7 @@ function MyOrders() {
                       </View>
                     </View>
                   </Swipeout>
-                );
+                );}
               })}
               <Divider />
             </>

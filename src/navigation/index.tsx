@@ -49,6 +49,7 @@ import ShippingAdress from '../screens/ShippingAddress';
 import BPayment from '../screens/BitCoinPayment';
 import Reels from '../screens/Reels';
 import AddReel from '../screens/AddReels';
+import MyOrderDetail from '../screens/MyOrderDetail';
 
 export type ChatType =
   | 'all'
@@ -99,6 +100,7 @@ export type RootStackParamList = {
   AccountSettings: undefined;
   SupportForm: undefined;
   MyOrders: undefined;
+  MyOrderDetail: {data: any[]};
   Payment: {address_id: number};
   ShippingAdress: undefined;
   BPayment: undefined;
@@ -168,6 +170,7 @@ function NavContainer() {
             <Stack.Screen name="AccountSettings" component={AccountSettings} />
             <Stack.Screen name="ResetPassword" component={ResetPassword} />
             <Stack.Screen name="MyOrders" component={MyOrders} />
+           
             <Stack.Screen name="Payment" component={Cards} />
             <Stack.Screen name="ShippingAdress" component={ShippingAdress} />
             <Stack.Screen name="BPayment" component={BPayment} />
@@ -177,6 +180,7 @@ function NavContainer() {
               component={SearchedProducts}
             />
             <Stack.Screen name="EditAccount" component={EditAccount} />
+            <Stack.Screen name="MyOrderDetail" component={MyOrderDetail} />
           </Stack.Group>
         )}
       </Stack.Navigator>
