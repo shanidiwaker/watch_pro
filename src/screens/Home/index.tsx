@@ -60,7 +60,7 @@ function Home() {
   const [img, setImg] = React.useState([]);
   const { data: products, error, isLoading, refetch } = useFetchProducts();
   const [isCatLoading, setIsCatLoading] = React.useState(false);
-  // console.log("products",products)
+  // console.log("productts",products)
   const navigation = useNavigation<RootNavigationType>();
 
   React.useMemo(() => {
