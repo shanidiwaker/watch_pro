@@ -22,6 +22,8 @@ export type ReelsScreenProps = NativeStackScreenProps<
 
 function Reels(props: ReelsScreenProps) {
   const { route, navigation } = props;
+  const { feedList, isLoading, refetch, isFetchingNextPage, onEndReached } =
+    useReels(route?.params?.id, route?.params?.reel);
   const { displayHeight, setDisplayHeight } = useContext(AppContext);
   const refFlatList = useRef();
   const [scrollY] = useState(new Animated.Value(0));
@@ -30,8 +32,7 @@ function Reels(props: ReelsScreenProps) {
   const { followUser } = useProfileOperations();
   const inset = useSafeAreaInsets();
 
-  const { feedList, isLoading, refetch, isFetchingNextPage, onEndReached } =
-    useReels(route?.params?.id, route?.params?.reel);
+
   // console.log('feedList', JSON.stringify(feedList, null, 2));
   const viewabilityConfig = { viewAreaCoveragePercentThreshold: 80 };
   const onViewableItemsChanged = useRef(viewableItems => {

@@ -12,8 +12,9 @@ import {
   StyleSheet,
   Keyboard,
   Platform,
-  Dimensions,
+  Image,
   Alert,
+  TextInput,
 } from 'react-native';
 import RNFS from 'react-native-fs';
 import VideoPlayer from 'react-native-video-player';
@@ -156,6 +157,7 @@ function AddReel(props: EditScreenProps) {
     /* eslint-disable @typescript-eslint/no-non-null-assertion */
     const reel: IMedia[] = [];
     if (files.length > 0) {
+
       files.map(file => {
         const fileType: string = file.type!;
         const fileSize: number = file.fileSize!;
@@ -217,16 +219,20 @@ function AddReel(props: EditScreenProps) {
     // console.log('id==================>', selected, id);
     onCatClose();
   };
+
   // create thumbnail
   createThumbnail({
     url: video,
     timeStamp: 10000,
   })
-    .then(response =>
-      // console.log('thamblain=======>', response)
-      setFieldValue('thamblain', response)
+    .then(response => {
+      setFieldValue('thamblain', {
+        uri: response.path,
+        type: 'jpeg',
+        name: 'new Date().getTime()'
+      });
+    }
     )
-    // setImg(response?.path))      
     .catch(err => console.log({ err }));
   // console.log(img[0])
 
@@ -320,6 +326,17 @@ function AddReel(props: EditScreenProps) {
             error={touched.category && errors.category}
           />
         </View>
+        {/* <View px={25} width="100%" mt={1}>
+          <Image
+            // key={`${item.name}`}
+            source={{ uri: img }}
+            // eslint-disable-next-line react-native/no-inline-styles
+            style={[
+              // styles.watchImg,
+              { height: 150 },
+            ]}
+            resizeMode="contain" />
+        </View> */}
         <TouchableOpacity
           onPress={selectAddMedia}
           style={{ width: '100%', paddingHorizontal: 25 }}>
