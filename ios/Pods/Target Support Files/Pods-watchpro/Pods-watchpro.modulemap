@@ -1,6 +1,0 @@
-module Pods_watchpro {
-  umbrella header "Pods-watchpro-umbrella.h"
-
-  export *
-  module * { export * }
-}
