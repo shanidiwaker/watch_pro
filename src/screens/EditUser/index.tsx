@@ -254,7 +254,7 @@ function EditAccount() {
                 width: '100%',
               }}>
               {values.cover_photo.length > 0 ? (
-                // eslint-disable-next-line react-native/no-inline-styles
+                // eslint-disable-next-line react-native/no-inline-styles require("../.././assets/images/user.png")
                 <View
                   mt={2}
                   style={[

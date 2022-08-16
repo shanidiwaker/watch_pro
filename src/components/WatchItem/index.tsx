@@ -72,7 +72,7 @@ export function WatchItem(props: IWatchItem) {
     is_post,
   } = item;
   console.log('shop', shop);
-  console.log('FromUsershop', props);
+  console.log('FromUsershop', item.sale_price);
   const {isOpen, onOpen, onClose} = useDisclose();
   const {t} = useTranslation();
   return (
@@ -234,7 +234,12 @@ export function WatchItem(props: IWatchItem) {
                   </Caption>
                 </>
               ) : (
-                <Caption style={styles.AEDText}>AED {item.price}</Caption>
+               
+                <Caption style={styles.AEDText}>AED {item.price}  <Text style={styles.AEDTextStroke}>
+                  AED {String(item.sale_price).includes('.')? String(item.sale_price).substring(0, String(item.sale_price).indexOf('.')):item.sale_price}
+                </Text>
+                </Caption>
+          
               )}
             </View>
             {isCollected ? (
@@ -329,7 +334,12 @@ const styles = StyleSheet.create({
   },
   AEDText: {
     fontSize: 12,
-    color: theme.colors.gray[400],
+    color: theme.colors.gray[400]
+  },
+  
+  AEDTextStroke: {
+    fontSize: 12,
+    color: theme.colors.red[400],textDecorationLine: 'line-through', textDecorationStyle: 'solid'
   },
   item: {
     margin: 5,

@@ -238,7 +238,7 @@ function Me() {
               source={{
                 uri:
                   user?.image ||
-                  'https://www.freeiconspng.com/thumbs/camera-icon/camera-icon-21.png',
+                  'https://www.freeiconspng.com/uploads/profile-icon-png-profiles-13.png',
               }}
               style={styles.img}
             />

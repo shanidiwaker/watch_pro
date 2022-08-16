@@ -76,10 +76,10 @@ function Header(props: _Header) {
   const handlePressMe = () => {
     navigation.navigate('Me');
   };
+  console.log('shopImage',shopImage)
   const handleSetting = () => {
     navigation.navigate('Settings');
   };
-
   const handleShare = async () => {
     try {
       const result = await Share.share({

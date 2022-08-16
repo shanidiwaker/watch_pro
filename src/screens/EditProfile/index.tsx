@@ -212,8 +212,8 @@ function EditProfile() {
           <View style={styles.bgImg}>
             <FastImage
               source={{
-                uri: user?.cover_photo,
-                // 'https://www.aphki.or.id//post/avatar.png',
+                uri: user?.cover_photo || "https://www.freeiconspng.com/uploads/profile-icon-png-profiles-13.png"
+                // 'https://www.aphki.or.id//post/avatar.png', https://www.freeiconspng.com/uploads/profile-icon-png-profiles-13.png
               }}
               style={[
                 styles.bgImg,
@@ -287,7 +287,7 @@ function EditProfile() {
             /> */}
             <FastImage
               source={{
-                uri: user?.image,
+                uri: user?.image 
               }}
               style={styles.img}
             />

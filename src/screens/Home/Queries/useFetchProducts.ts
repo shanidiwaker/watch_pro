@@ -41,6 +41,7 @@ export interface IProducts {
   shop_id: number;
   brand_id: number;
   price: number;
+  sale_price : number;
   name: string;
   image: string;
   images: string;

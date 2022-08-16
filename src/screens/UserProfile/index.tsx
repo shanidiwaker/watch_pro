@@ -98,6 +98,8 @@ function Shop(props: ProfileScreenProps) {
   const renderItem: ListRenderItem<IProducts> = ({item}) => (
     <WatchItem item={item} handleLike={handleLike}   />
   );
+
+  console.log("profile?.Post")
   return (
     <ScrollView
       style={{
@@ -125,14 +127,23 @@ function Shop(props: ProfileScreenProps) {
         style={styles.bgImg}>
       </ImageBackground> */}
       <View mt={-45} px={3}>
+        {profile?.User?.image ?
+       
         <Image
-          source={{
-            uri:
-              profile?.User?.image ||
-              'https://i.pinimg.com/originals/db/8b/bc/db8bbc9fc0a03cdc1a218b1455e1f2af.jpg',
-          }}
+        source={{
+          uri:
+          
+            profile?.User?.image ||
+            'https://i.pinimg.com/originals/db/8b/bc/db8bbc9fc0a03cdc1a218b1455e1f2af.jpg',
+        }}
+        style={styles.img}
+      /> :
+      <Image
+      source={require('../.././assets/images/user.png')}
           style={styles.img}
         />
+      }
+        
       </View>
       <View
         flexDirection="row"

@@ -45,8 +45,8 @@ function Cart() {
 
 
     const {data: cartItem} = useFetchCartItems();
-    
-
+    const productPrice = cartItem.data[0].product
+  
    
 
   const handleContinue = () => {
@@ -286,7 +286,7 @@ function Cart() {
                       Sub Total ({cartItem?.data?.length} Item)
                     </Caption>
                     <Caption mb={3} ml={2} fontSize={18}>
-                      AED {cartItem?.SubTotal}
+                      AED {productPrice[0].price}
                     </Caption>
                   </View>
                   <TouchableOpacity

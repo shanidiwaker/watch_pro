@@ -50,6 +50,7 @@ import BPayment from '../screens/BitCoinPayment';
 import Reels from '../screens/Reels';
 import AddReel from '../screens/AddReels';
 import MyOrderDetail from '../screens/MyOrderDetail';
+import ShopDetailSecond from '../screens/ShopDetailSecond';
 
 export type ChatType =
   | 'all'
@@ -106,6 +107,7 @@ export type RootStackParamList = {
   BPayment: undefined;
   Reels: {id: number; reel: number};
   AddReel: undefined;
+  ShopDetailSecond: {id: number; shopName: string; shopImage: string};
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -170,7 +172,8 @@ function NavContainer() {
             <Stack.Screen name="AccountSettings" component={AccountSettings} />
             <Stack.Screen name="ResetPassword" component={ResetPassword} />
             <Stack.Screen name="MyOrders" component={MyOrders} />
-           
+            <Stack.Screen name="ShopDetailSecond" component={ShopDetailSecond} />
+
             <Stack.Screen name="Payment" component={Cards} />
             <Stack.Screen name="ShippingAdress" component={ShippingAdress} />
             <Stack.Screen name="BPayment" component={BPayment} />
