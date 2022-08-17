@@ -99,9 +99,12 @@ export const userSocialLogin = (data: ISocialLoginRequestData) => {
             config.SOCIAL_LOGIN_URL,
             data,
           );
-          console.log('response', JSON.stringify(response, null, 2));
+          // console.log('response', JSON.stringify(response, null, 2));
           const resData = { accessToken: '', shop: null, user: null };
+          console.log('start-=====>', response);
+
           if (response.status === 'true') {
+
             const token = response[0].original.access_token;
             resData.accessToken = token;
             resData.shop = response[0].original.shop;
@@ -109,6 +112,8 @@ export const userSocialLogin = (data: ISocialLoginRequestData) => {
             if (response) {
               //
             }
+            console.log('mainssssss,====>', response);
+
             return Promise.resolve(resData);
           }
           Alert.alert('Error', response.data.message);

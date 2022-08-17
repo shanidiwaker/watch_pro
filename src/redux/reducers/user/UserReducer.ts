@@ -1,5 +1,5 @@
-import {IUserState} from './UserInterface';
-import {UserTypes} from './UserTypes';
+import { IUserState } from './UserInterface';
+import { UserTypes } from './UserTypes';
 
 const initialState: IUserState = {
   loading: false,
@@ -25,7 +25,7 @@ const userReducer = (state: IUserState = initialState, action: any) => {
         isLoggedIn: false,
       };
     case UserTypes.LOGIN_FULFILLED: {
-      const {accessToken, user, shop} = action?.payload || {};
+      const { accessToken, user, shop } = action?.payload || {};
       return {
         ...state,
         token: accessToken,
@@ -49,7 +49,7 @@ const userReducer = (state: IUserState = initialState, action: any) => {
         isLoggedIn: false,
       };
     case UserTypes.APPLE_LOGIN_FULFILLED: {
-      const {accessToken, user, shop} = action?.payload || {};
+      const { accessToken, user, shop } = action?.payload || {};
       return {
         ...state,
         token: accessToken,
@@ -66,6 +66,30 @@ const userReducer = (state: IUserState = initialState, action: any) => {
         isLoggedIn: false,
       };
 
+    case UserTypes.SOCIAL_LOGIN_PENDING:
+      return {
+        ...state,
+        loading: true,
+        isLoggedIn: false,
+      };
+    case UserTypes.SOCIAL_LOGIN_FULFILLED: {
+      const { accessToken, user, shop } = action?.payload || {};
+      return {
+        ...state,
+        token: accessToken,
+        user,
+        shop: shop && shop[0],
+        loading: false,
+        isLoggedIn: true,
+      };
+    }
+    case UserTypes.SOCIAL_LOGIN_REJECTED:
+      return {
+        ...state,
+        loading: false,
+        isLoggedIn: false,
+      };
+
     case UserTypes.FORGOT_PASSWORD_PENDING:
       return {
         ...state,
@@ -73,7 +97,7 @@ const userReducer = (state: IUserState = initialState, action: any) => {
         status: false,
       };
     case UserTypes.FORGOT_PASSWORD_FULFILLED: {
-      const {accessToken} = action?.payload || {};
+      const { accessToken } = action?.payload || {};
       return {
         ...state,
         token: accessToken,
@@ -96,14 +120,14 @@ const userReducer = (state: IUserState = initialState, action: any) => {
         status: false,
       };
     case UserTypes.SHOP_FULFILLED: {
-      const {shop} = action?.payload || {};
+      const { shop } = action?.payload || {};
       return {
         ...state,
         shop,
       };
     }
     case UserTypes.REGISTER_FULFILLED: {
-      const {user} = action?.payload || {};
+      const { user } = action?.payload || {};
       return {
         ...state,
         user,
