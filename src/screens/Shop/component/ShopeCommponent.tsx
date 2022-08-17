@@ -77,11 +77,21 @@ function ShopCommponent(props: IProps) {
         <View style={styles.Imgclock}>
           <Pressable
             onPress={() =>
-              navigation.navigate('ShopDetail', {
-                id,
-                shopName: name,
-                shopImage: logo?.[0]?.image,
-              })
+               {item.id % 2 !== 0 ? 
+                
+                navigation.navigate('ShopDetail', {
+                  id,
+                  shopName: name,
+                  shopImage: logo?.[0]?.image,
+                })
+                :
+                navigation.navigate('ShopDetailSecond', {
+                  id,
+                  shopName: name,
+                  shopImage: logo?.[0]?.image,
+                })  
+              }
+
             }
             style={styles.logoButton}>
             <Image source={{uri: logo?.[0]?.image}} style={styles.logo} />

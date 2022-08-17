@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { useMemo } from 'react';
+import React, {useMemo} from 'react';
 import {
   Image,
   StyleSheet,
@@ -14,19 +14,19 @@ import {
   Actionsheet,
   useDisclose,
 } from 'native-base';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import Feather from 'react-native-vector-icons/Feather';
-import { useTranslation } from 'react-i18next';
+import {useTranslation} from 'react-i18next';
 import FastImage from 'react-native-fast-image';
 import VideoPlayer from 'react-native-video-player';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Entypo from 'react-native-vector-icons/Entypo';
-import { RootNavigationType } from '../../screens/Home';
-import { theme } from '../../theme';
-import { Caption, Title } from '../Typography';
+import {RootNavigationType} from '../../screens/Home';
+import {theme} from '../../theme';
+import {Caption, Title} from '../Typography';
 import ImagesLocal from '../../assets/images';
-import { IProducts } from '../../screens/Home/Queries/useFetchProducts';
-import { textEllipsis } from '../../utils';
+import {IProducts} from '../../screens/Home/Queries/useFetchProducts';
+import {textEllipsis} from '../../utils';
 
 interface IWatchItem {
   item: IProducts;
@@ -65,24 +65,24 @@ export function WatchItem(props: IWatchItem) {
     collected,
     product_view_count,
     images,
-    thamblain,
     shop,
     like: product_like,
     id,
     liked,
     is_post,
   } = item;
-  // console.log('shop', shop);
-  const { isOpen, onOpen, onClose } = useDisclose();
-  const { t } = useTranslation();
+  console.log('shop', shop);
+  console.log('FromUsershop', item.sale_price);
+  const {isOpen, onOpen, onClose} = useDisclose();
+  const {t} = useTranslation();
   return (
     <TouchableWithoutFeedback
       onPress={() => {
         // navigation.navigate(width ? 'ProductDetails' : 'PostDetails', {id});
         if (is_post === 0 || isShop) {
-          navigation.navigate('ProductDetails', { id, status: '' });
+          navigation.navigate('ProductDetails', {id, status: ''});
         } else {
-          navigation.navigate('Reels', { id, reel });
+          navigation.navigate('Reels', {id, reel});
         }
 
         //
@@ -99,29 +99,28 @@ export function WatchItem(props: IWatchItem) {
           },
         ]}>
         <View position="relative">
-          {thamblain ? (
-            thamblain.split('.').reverse()[0] === 'mp4' ? (
+          {images ? (
+            images.split('.').reverse()[0] === 'mp4' ? (
               <VideoPlayer
-                video={{ uri: images }}
+                video={{uri: images}}
                 login_options_background
                 volume={0}
                 resizeMode="cover"
                 style={[
                   styles.watchImg,
-                  { height: height || randomBool ? 150 : 280 },
+                  {height: height || randomBool ? 150 : 280},
                 ]}
                 thumbnail={{
                   uri: 'https://i.picsum.photos/id/866/1600/900.jpg',
                 }}
               />
-
             ) : (
               <FastImage
-                source={{ uri: thamblain }}
+                source={{uri: images}}
                 // eslint-disable-next-line react-native/no-inline-styles
                 style={[
                   styles.watchImg,
-                  { height: height || randomBool ? 150 : 280 },
+                  {height: height || randomBool ? 150 : 280},
                 ]}
                 resizeMode="cover"
               />
@@ -133,7 +132,7 @@ export function WatchItem(props: IWatchItem) {
               // eslint-disable-next-line react-native/no-inline-styles
               style={[
                 styles.watchImg,
-                { height: height || randomBool ? 150 : 280 },
+                {height: height || randomBool ? 150 : 280},
               ]}
               resizeMode="contain"
             />
@@ -141,9 +140,9 @@ export function WatchItem(props: IWatchItem) {
           {is_post ? (
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate('Reels', { id, reel });
+                navigation.navigate('Reels', {id, reel});
               }}
-              style={{ position: 'absolute', top: 5, right: 5, zIndex: 99999 }}>
+              style={{position: 'absolute', top: 5, right: 5, zIndex: 99999}}>
               <Feather name="film" size={25} color="#fff" />
             </TouchableOpacity>
           ) : null}
@@ -154,7 +153,7 @@ export function WatchItem(props: IWatchItem) {
                 <Image
                   source={ImagesLocal.EYE}
                   // eslint-disable-next-line react-native/no-inline-styles
-                  style={{ width: 18, height: 18, marginRight: 5 }}
+                  style={{width: 18, height: 18, marginRight: 5}}
                   resizeMode="cover"
                 />
                 <Text color="#ffffff">{product_view_count}</Text>
@@ -207,8 +206,8 @@ export function WatchItem(props: IWatchItem) {
                 <>
                   {shop?.[0]?.logo ? (
                     <Image
-                      source={{ uri: shop?.[0]?.logo }}
-                      style={[styles.img, { borderWidth: 1 }]}
+                      source={{uri: shop?.[0]?.logo}}
+                      style={[styles.img, {borderWidth: 1}]}
                     />
                   ) : (
                     <View
@@ -235,7 +234,12 @@ export function WatchItem(props: IWatchItem) {
                   </Caption>
                 </>
               ) : (
-                <Caption style={styles.AEDText}>AED {item.price}</Caption>
+               
+                <Caption style={styles.AEDText}>AED {item.price}  <Text style={styles.AEDTextStroke}>
+                  AED {String(item.sale_price).includes('.')? String(item.sale_price).substring(0, String(item.sale_price).indexOf('.')):item.sale_price}
+                </Text>
+                </Caption>
+          
               )}
             </View>
             {isCollected ? (
@@ -248,7 +252,7 @@ export function WatchItem(props: IWatchItem) {
                     <FontAwesome
                       name="star"
                       size={18}
-                      style={{ color: theme.colors.red[900] }}
+                      style={{color: theme.colors.red[900]}}
                     />
                   ) : (
                     <Feather
@@ -281,7 +285,7 @@ export function WatchItem(props: IWatchItem) {
                     <FontAwesome
                       name="heart"
                       size={18}
-                      style={{ color: theme.colors.red[900] }}
+                      style={{color: theme.colors.red[900]}}
                     />
                   ) : (
                     <Feather
@@ -330,7 +334,12 @@ const styles = StyleSheet.create({
   },
   AEDText: {
     fontSize: 12,
-    color: theme.colors.gray[400],
+    color: theme.colors.gray[400]
+  },
+  
+  AEDTextStroke: {
+    fontSize: 12,
+    color: theme.colors.red[400],textDecorationLine: 'line-through', textDecorationStyle: 'solid'
   },
   item: {
     margin: 5,

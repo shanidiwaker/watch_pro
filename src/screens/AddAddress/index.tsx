@@ -7,7 +7,7 @@ import {
   StyleSheet,
   TextInput,
   ScrollView,
-  TouchableOpacity,
+  TouchableOpacity,Alert
 } from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
@@ -34,29 +34,29 @@ const validationSchema = Yup.object({
     .trim()
     .min(3, 'Invalid name!')
     .required('Full Address is required!'),
-  state: Yup.string().min(3, 'Invalid state!').required('State is required!'),
+    state: Yup.string().min(3, 'Invalid state!').required('State is required!'),
+  
   phone_no: Yup.string()
     .matches(PHONE_REGEX, 'Phone number is not valid!')
     .required('Please enter mobile'),
   username: Yup.string().min(3, 'Invalid Name!').required('Name is required!'),
   city: Yup.string().min(3, 'Invalid city!').required('City is required!'),
-  pincode: Yup.string()
-    .min(3, 'Invalid pincode!')
-    .required('Pincode is required!'),
+
 });
 
 interface MyFormValues {
-  firstName: string;
-  lastName: string;
+  //firstName: string;
+ // lastName: string;
   username: string;
   phone_no: string;
-  id?: '';
+  //id?: '';
   full_address: string;
   state: string;
   city: string;
   pincode: string;
   country: string;
 }
+
 export default function ShippingAdress(props: ProfileScreenProps) {
   const [t, i18] = useTranslation();
   const {route} = props;
@@ -64,18 +64,6 @@ export default function ShippingAdress(props: ProfileScreenProps) {
   const inset = useSafeAreaInsets();
   const [states, setStates] = useState<any>([]);
   const {addAddress, editAddress} = useSaveAddress();
-
-  // const initialValues = {
-  //   firstName: '',
-  //   lastName: '',
-  //   username: '',
-  //   phone_no: '',
-  //   full_address: '',
-  //   state: '',
-  //   city: '',
-  //   pincode: '',
-  //   country: '',
-  // };
   console.log('data', JSON.stringify(data, null, 2));
   const initialValues = {
     full_address: data?.full_address || '',
@@ -123,13 +111,19 @@ export default function ShippingAdress(props: ProfileScreenProps) {
     setFieldValue('state', text);
   };
 
+  const showAlert = () =>{
+    Alert.alert(
+       'You need to...'
+    )
+ }
+
   return (
     <View
       style={{
         height: '100%',
         width: '100%',
         paddingTop: inset.top,
-        paddingHorizontal: 20,
+        paddingHorizontal: 10,
         justifyContent:'center',
         alignItems: 'center',
         backgroundColor: useColorModeValue(
@@ -213,9 +207,10 @@ export default function ShippingAdress(props: ProfileScreenProps) {
               },
             ]}
             onPress={() => {
-              if (!isSubmitting) {
+              console.log("SDa",isSubmitting)
+              //if (!isSubmitting) {
                 handleSubmit();
-              }
+            //  }
             }}>
             {isSubmitting ? (
               <Spinner />

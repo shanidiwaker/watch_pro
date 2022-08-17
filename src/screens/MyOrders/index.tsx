@@ -20,13 +20,29 @@ import {
 import HeaderSimple from '../../components/HeaderSimple';
 import {RootNavigationType} from '../Home';
 // import {Link,useRoute} from '@react-navigation/native'
-
+import moment from "moment";
 function MyOrders() {
   const navigation = useNavigation<RootNavigationType>();
   const {t} = useTranslation();
   const [selectedItem, setSelectedItem] = React.useState(0);
   const {removetoCart} = useCartOperations();
   const inset = useSafeAreaInsets();
+  const [products,setProducts] = React.useState([])
+  const {data: myOrders} = useFetchMyOrderItems();
+  let pro_item = myOrders
+  let product_data = pro_item?.data
+  let product_item = product_data
+  console.log('pro_item.product',product_item) 
+  useEffect(()=>{
+    if(myOrders){
+    // data()
+      console.log(myOrders)
+    }
+    
+  },[])
+  
+
+//console.log('myOrders',myOrders)
 
   const swipeoutBtns = [
     {
@@ -38,20 +54,27 @@ function MyOrders() {
       },
     },
   ];
-  const {data: myOrders} = useFetchMyOrderItems();
+ 
   
   const handleContinue = () => {
     navigation.navigate('HomeTabs');
   };
+   const data =()=> {
+    
+    myOrders?.data?.map((item) => {
+    setProducts(item.product)
+    console.log(item.product)
+  })
+  }
+  const handleProductDetail = (v: any[], status: string) => {
 
-  const handleProductDetail = (v: any, status: string) => {
-
-    navigation.navigate('ProductDetails', {
+   /*  navigation.navigate('ProductDetails', {
       id: v,
       status,
-    });
+    }); */
+    navigation.navigate('MyOrderDetail',{data:v});
   };
-
+  console.log(moment("2021-07-14T00:00:00.000Z").utc().format('YYYY-MM-DD'));
   return (
     <View
       style={{
@@ -96,9 +119,15 @@ function MyOrders() {
               Last 6 months
             </SubTitle>
           </View>
-          {myOrders && myOrders?.data?.length > 0 ? (
+          {product_item && product_item?.length > 0 ? (
             <>
-              {myOrders?.data?.map((item: IMyOrderItems) => {
+              {product_item?.map((item) => {
+                console.log("items..",item.product[0])
+                var id = item.id
+                var data = item.product[0]
+                if( item.product[0] != null){
+
+                
                 return (
                   <Swipeout
                     right={swipeoutBtns}
@@ -109,7 +138,7 @@ function MyOrders() {
                       ),
                     }}
                     onOpen={() => {
-                      setSelectedItem(Number(item?.product[0]?.id));
+                      setSelectedItem(Number(data.id));
                     }}>
                     <View
                       flexDirection="row"
@@ -123,7 +152,7 @@ function MyOrders() {
                       <View width="30%">
                         <Image
                           alt="watch2"
-                          source={{uri: item?.product?.[0]?.images}}
+                          source={{uri: data.images}}
                           style={styles.productimage}
                         />
                       </View>
@@ -135,7 +164,7 @@ function MyOrders() {
                             theme.colors.black[2000],
                             theme.colors.appWhite[600],
                           )}>
-                          {item.product?.[0]?.name}
+                          {data.name}
                         </Title>
                         <Caption
                           color={useColorModeValue(
@@ -143,10 +172,18 @@ function MyOrders() {
                             theme.colors.appWhite[600],
                           )}
                           fontSize={14}>
-                          AED {item.product?.[0]?.price}
+                          AED {data.price}
+                        </Caption>
+                        <Caption
+                          color={useColorModeValue(
+                            theme.colors.black[2000],
+                            theme.colors.appWhite[600],
+                          )}
+                          fontSize={14}>
+                          Date {moment(data.created_at).utc().format('YYYY-MM-DD')}
                         </Caption>
                         <View
-                          bg={theme.colors.green[500]}
+                          bg="#008080"
                           width={110}
                           borderRadius={4}
                           p={1}>
@@ -162,7 +199,7 @@ function MyOrders() {
                         <TouchableOpacity
                           onPress={() => {
                             handleProductDetail(
-                              item?.product[0]?.id,
+                              item,
                               item.status,
                             );
                           }}>
@@ -180,7 +217,7 @@ function MyOrders() {
                       </View>
                     </View>
                   </Swipeout>
-                );
+                );}
               })}
               <Divider />
             </>
