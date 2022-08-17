@@ -32,6 +32,8 @@ import {
   GoogleSigninButton,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
+import { LoginManager } from 'react-native-fbsdk';
+import { LoginButton, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 
 export type RootNavigationType = NativeStackNavigationProp<
   RootStackParamList,
@@ -49,6 +51,8 @@ function LoginOptions() {
   useEffect(() => {
     GoogleSignin.configure();
   }, []);
+
+  // Google login//
   const signIn = async () => {
     try {
       await GoogleSignin.hasPlayServices();
@@ -68,6 +72,51 @@ function LoginOptions() {
       }
     }
   };
+
+  // Facebook login//
+  const fbLogIn = (resCallBack) => {
+    LoginManager.logOut()
+    return LoginManager.logInWithPermissions(['email', 'public_profile']).then(
+      result => {
+        console.log('FB result====>>>', result)
+        if (result.declinedPermissions && result.declinedPermissions.includes('email')) {
+          resCallBack({ message: 'email is required' })
+        }
+        if (result.isCancelled) {
+          console.log("error")
+        }
+        else {
+          const infoRequest = new GraphRequest(
+            '/me?fileds=email,name,picture,friend',
+            null,
+            resCallBack
+          );
+          new GraphRequestManager().addRequest(infoRequest).start()
+        }
+      },
+
+      function (error) {
+        console.log("login fail with erroe:" + error)
+      }
+    )
+  };
+  const onFBLogIn = async () => {
+    try {
+      await fbLogIn(_responenceInfoCallBack)
+    } catch (error) {
+      console.log('error raised', error)
+    }
+  }
+  const _responenceInfoCallBack = async (error, result) => {
+    if (error) {
+      console.log('error top', error)
+      return
+    } else {
+      const userData = result
+      console.log("fb data+++", userData)
+    }
+  }
+  // Facebook login end//
 
   const handleTerm = () => {
     confirm?.show?.({
@@ -193,6 +242,13 @@ function LoginOptions() {
           </View>
 
           <SeparatorLine />
+          <GoogleSigninButton
+            style={{ width: 192, height: 48, marginTop: 40 }}
+            size={GoogleSigninButton.Size.Wide}
+            color={GoogleSigninButton.Color.Dark}
+            onPress={onFBLogIn}
+          // disabled={state.isSigninInProgress}
+          />
           {Platform.OS === 'ios' && (
             <TouchableOpacity
               onPress={onAppleButtonPress}
@@ -209,13 +265,6 @@ function LoginOptions() {
             </TouchableOpacity>
           )}
         </View>
-        <GoogleSigninButton
-          style={{ width: 192, height: 48 }}
-          size={GoogleSigninButton.Size.Wide}
-          color={GoogleSigninButton.Color.Dark}
-          onPress={signIn}
-        // disabled={state.isSigninInProgress}
-        />
       </View>
     </ImageBackground>
   );
