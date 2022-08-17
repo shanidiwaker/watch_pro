@@ -21,10 +21,10 @@
 		6D6BF9BBE932418ABE61977C /* ProximaNova-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 09F34EA029E24CB19BA8355C /* ProximaNova-Light.ttf */; };
 		7EF68E3733C33B6898317E18 /* libPods-watchpro-watchproTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ABFE59519B596E51CEFDCCC0 /* libPods-watchpro-watchproTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		991332B028AB907A001C5008 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 991332AF28AB907A001C5008 /* GoogleService-Info.plist */; };
 		996AB87528ACDC5B00D1161E /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 996AB87428ACDC5B00D1161E /* File.swift */; };
 		B86F6B348EC3444E9024AF1B /* ProximaNova-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FAB4E0F27458400FBCDF35AB /* ProximaNova-Semibold.ttf */; };
 		D2E71170DB374487AA868B30 /* ProximaNova-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8632B0A2BCA64D208AC0850A /* ProximaNova-Regular.ttf */; };
+		DA00237728AD2BFF009384BE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DA00237628AD2BFF009384BE /* GoogleService-Info.plist */; };
 		EB43A622C69A40DDB763225A /* ProximaNova-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ECDBA337D2304F64BC8E4E77 /* ProximaNova-Bold.ttf */; };
 		EC185084C288494A99CF0B1E /* ProximaNova-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DC62AE292A224C5BB17BFF42 /* ProximaNova-Thin.ttf */; };
 /* End PBXBuildFile section */
@@ -77,7 +77,6 @@
 		8632B0A2BCA64D208AC0850A /* ProximaNova-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "ProximaNova-Regular.ttf"; path = "../src/assets/fonts/ProximaNova-Regular.ttf"; sourceTree = "<group>"; };
 		89C5F69D76AF4508AAB46AAF /* DMSans-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans-Italic.ttf"; path = "../src/assets/fonts/DMSans-Italic.ttf"; sourceTree = "<group>"; };
 		927B3D4ABE9143B8ACAA532E /* DMSans-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans-Medium.ttf"; path = "../src/assets/fonts/DMSans-Medium.ttf"; sourceTree = "<group>"; };
-		991332AF28AB907A001C5008 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		996AB87328ACDC5A00D1161E /* watchpro-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "watchpro-Bridging-Header.h"; sourceTree = "<group>"; };
 		996AB87428ACDC5B00D1161E /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		9CDC180CEEAC4B3FBD2A40D5 /* DMSans-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans-Regular.ttf"; path = "../src/assets/fonts/DMSans-Regular.ttf"; sourceTree = "<group>"; };
@@ -89,6 +88,7 @@
 		CD2A35D5BB814C1386F2B59E /* DMSans-MediumItalic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DMSans-MediumItalic.ttf"; path = "../src/assets/fonts/DMSans-MediumItalic.ttf"; sourceTree = "<group>"; };
 		D00AAFFCFCFDA5787532823F /* Pods-watchpro.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-watchpro.release.xcconfig"; path = "Target Support Files/Pods-watchpro/Pods-watchpro.release.xcconfig"; sourceTree = "<group>"; };
 		D04AA427589F423E8A5855D0 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
+		DA00237628AD2BFF009384BE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DC62AE292A224C5BB17BFF42 /* ProximaNova-Thin.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "ProximaNova-Thin.ttf"; path = "../src/assets/fonts/ProximaNova-Thin.ttf"; sourceTree = "<group>"; };
 		ECDBA337D2304F64BC8E4E77 /* ProximaNova-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "ProximaNova-Bold.ttf"; path = "../src/assets/fonts/ProximaNova-Bold.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -170,7 +170,7 @@
 		13B07FAE1A68108700A75B9A /* watchpro */ = {
 			isa = PBXGroup;
 			children = (
-				991332AF28AB907A001C5008 /* GoogleService-Info.plist */,
+				DA00237628AD2BFF009384BE /* GoogleService-Info.plist */,
 				4B90E350285E6536005CC29B /* watchpro.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -351,7 +351,7 @@
 				D2E71170DB374487AA868B30 /* ProximaNova-Regular.ttf in Resources */,
 				B86F6B348EC3444E9024AF1B /* ProximaNova-Semibold.ttf in Resources */,
 				EC185084C288494A99CF0B1E /* ProximaNova-Thin.ttf in Resources */,
-				991332B028AB907A001C5008 /* GoogleService-Info.plist in Resources */,
+				DA00237728AD2BFF009384BE /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
