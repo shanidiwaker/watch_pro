@@ -1,5 +1,5 @@
-import {IShop, IUser} from '../../../screens/Home/Queries/useFetchProducts';
-import {UserTypes} from './UserTypes';
+import { IShop, IUser } from '../../../screens/Home/Queries/useFetchProducts';
+import { UserTypes } from './UserTypes';
 
 export interface ILoginRequestData {
   username: string;
@@ -7,6 +7,15 @@ export interface ILoginRequestData {
 }
 
 export interface IAppleLoginRequestData {
+  name: string;
+  social_id: string;
+  device_id: string;
+  platform: string;
+  email: string;
+}
+
+
+export interface ISocialLoginRequestData {
   name: string;
   social_id: string;
   device_id: string;
@@ -50,6 +59,10 @@ interface IAppleLogin {
   type: UserTypes.APPLE_LOGIN;
 }
 
+interface ISocialLogin {
+  type: UserTypes.SOCIAL_LOGIN;
+}
+
 interface IRegister {
   type: UserTypes.REGISTER;
 }
@@ -67,4 +80,5 @@ export type IUserActions =
   | IRegister
   | IForgotPassword
   | IResetPassword
-  | IAppleLogin;
+  | IAppleLogin
+  | ISocialLogin;

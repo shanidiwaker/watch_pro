@@ -1,18 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-console */
-import {Dispatch} from 'redux';
-import {Alert} from 'react-native';
-import {UserTypes} from './UserTypes';
+import { Dispatch } from 'redux';
+import { Alert } from 'react-native';
+import { UserTypes } from './UserTypes';
 import {
   IAppleLoginRequestData,
+  ISocialLoginRequestData,
   ILoginRequestData,
   IRegisterRequestData,
   IResetRequestData,
   IUserActions,
 } from './UserInterface';
-import {IResponseData} from '../../../constants/types';
+import { IResponseData } from '../../../constants/types';
 import client from '../../../utils/ApiClient';
-import {config} from '../../../config';
+import { config } from '../../../config';
 
 export const userLogin = (data: ILoginRequestData) => {
   return async (dispatch: Dispatch<IUserActions>) => {
@@ -25,7 +26,7 @@ export const userLogin = (data: ILoginRequestData) => {
             data,
           );
           console.log('response', JSON.stringify(response, null, 2));
-          const resData = {accessToken: '', shop: null, user: null};
+          const resData = { accessToken: '', shop: null, user: null };
           if (response.status === 'true') {
             const token = response[0].original.access_token;
             resData.accessToken = token;
@@ -62,7 +63,44 @@ export const userAppleLogin = (data: IAppleLoginRequestData) => {
             data,
           );
           console.log('response', JSON.stringify(response, null, 2));
-          const resData = {accessToken: '', shop: null, user: null};
+          const resData = { accessToken: '', shop: null, user: null };
+          if (response.status === 'true') {
+            const token = response[0].original.access_token;
+            resData.accessToken = token;
+            resData.shop = response[0].original.shop;
+            resData.user = response[0].original.user;
+            if (response) {
+              //
+            }
+            return Promise.resolve(resData);
+          }
+          Alert.alert('Error', response.data.message);
+
+          return Promise.reject(resData);
+        } catch (error: any) {
+          console.log('error', JSON.stringify(error, null, 2));
+          Alert.alert('Error', 'something went wrong!');
+
+          return Promise.reject(error);
+        }
+      },
+    });
+  };
+};
+
+export const userSocialLogin = (data: ISocialLoginRequestData) => {
+  return async (dispatch: Dispatch<IUserActions>) => {
+    return dispatch({
+      type: UserTypes.SOCIAL_LOGIN,
+      payload: async () => {
+        try {
+          console.log('data', data);
+          const response: IResponseData = await client.post(
+            config.SOCIAL_LOGIN_URL,
+            data,
+          );
+          console.log('response', JSON.stringify(response, null, 2));
+          const resData = { accessToken: '', shop: null, user: null };
           if (response.status === 'true') {
             const token = response[0].original.access_token;
             resData.accessToken = token;
@@ -117,7 +155,7 @@ export const userRegister = (data: IRegisterRequestData) => {
   };
 };
 
-export const forgotPassword = (data: {username: string}) => {
+export const forgotPassword = (data: { username: string }) => {
   return async (dispatch: Dispatch<IUserActions>) => {
     return dispatch({
       type: UserTypes.FORGOT_PASSWORD,

@@ -6,6 +6,7 @@ export const config = {
   BASE_URL: 'http://watchpro.yourang.io/api/',
   AUTH_API_URL: `${BASE_URL}/auth/user/login`,
   APPLE_LOGIN_URL: `${BASE_URL}/auth/user/apple/login`,
+  SOCIAL_LOGIN_URL: `${BASE_URL}/auth/user/sociallogin`,
   FORGOT_PASSWORD: `${BASE_URL}/auth/user/forgetpassword`,
   REGISTER_API: `${BASE_URL}/auth/user/register`,
   GET_PRODUCT_API_URL: `${BASE_URL}/user/getproduct`,

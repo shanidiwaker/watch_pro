@@ -2,7 +2,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { FormikHelpers, FormikProps, useFormik } from 'formik';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import {
   Image,
   StyleSheet,
@@ -53,6 +53,7 @@ function Login() {
   const dispatch = useDispatch();
   const navigation = useNavigation<RootNavigationType>();
   const { isLoggedIn } = useUserInfo();
+
   // formik
   const initialValues = {
     username: '',

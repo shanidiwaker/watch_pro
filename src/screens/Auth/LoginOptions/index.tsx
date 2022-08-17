@@ -27,13 +27,6 @@ import { RootStackParamList } from '../../../navigation';
 import { theme } from '../../../theme';
 import { useConfirmModal } from '../../../components/CofirmationModel';
 import { userAppleLogin } from '../../../redux/reducers/user/UserServices';
-import {
-  GoogleSignin,
-  GoogleSigninButton,
-  statusCodes,
-} from '@react-native-google-signin/google-signin';
-import { LoginManager } from 'react-native-fbsdk';
-import { LoginButton, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 
 export type RootNavigationType = NativeStackNavigationProp<
   RootStackParamList,
@@ -46,77 +39,6 @@ function LoginOptions() {
   const inset = useSafeAreaInsets();
   const confirm = useConfirmModal();
   const dispatch = useDispatch();
-  const [state, setState] = useState()
-
-  useEffect(() => {
-    GoogleSignin.configure();
-  }, []);
-
-  // Google login//
-  const signIn = async () => {
-    try {
-      await GoogleSignin.hasPlayServices();
-      const userInfo = await GoogleSignin.signIn();
-      setState({ userInfo });
-      console.log(userInfo);
-
-    } catch (error) {
-      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        // user cancelled the login flow
-      } else if (error.code === statusCodes.IN_PROGRESS) {
-        // operation (e.g. sign in) is in progress already
-      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        // play services not available or outdated
-      } else {
-        // some other error happened
-      }
-    }
-  };
-
-  // Facebook login//
-  const fbLogIn = (resCallBack) => {
-    LoginManager.logOut()
-    return LoginManager.logInWithPermissions(['email', 'public_profile']).then(
-      result => {
-        console.log('FB result====>>>', result)
-        if (result.declinedPermissions && result.declinedPermissions.includes('email')) {
-          resCallBack({ message: 'email is required' })
-        }
-        if (result.isCancelled) {
-          console.log("error")
-        }
-        else {
-          const infoRequest = new GraphRequest(
-            '/me?fileds=email,name,picture,friend',
-            null,
-            resCallBack
-          );
-          new GraphRequestManager().addRequest(infoRequest).start()
-        }
-      },
-
-      function (error) {
-        console.log("login fail with erroe:" + error)
-      }
-    )
-  };
-  const onFBLogIn = async () => {
-    try {
-      await fbLogIn(_responenceInfoCallBack)
-    } catch (error) {
-      console.log('error raised', error)
-    }
-  }
-  const _responenceInfoCallBack = async (error, result) => {
-    if (error) {
-      console.log('error top', error)
-      return
-    } else {
-      const userData = result
-      console.log("fb data+++", userData)
-    }
-  }
-  // Facebook login end//
 
   const handleTerm = () => {
     confirm?.show?.({
@@ -242,13 +164,6 @@ function LoginOptions() {
           </View>
 
           <SeparatorLine />
-          <GoogleSigninButton
-            style={{ width: 192, height: 48, marginTop: 40 }}
-            size={GoogleSigninButton.Size.Wide}
-            color={GoogleSigninButton.Color.Dark}
-            onPress={onFBLogIn}
-          // disabled={state.isSigninInProgress}
-          />
           {Platform.OS === 'ios' && (
             <TouchableOpacity
               onPress={onAppleButtonPress}
