@@ -5,13 +5,24 @@ import { SubTitle } from '../../../../components/Typography';
 import { theme } from '../../../../theme';
 import { useDispatch } from 'react-redux';
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
+import { LoginManager } from 'react-native-fbsdk';
 import { LoginButton, GraphRequest, GraphRequestManager } from 'react-native-fbsdk';
 import { userSocialLogin } from '../../../../redux/reducers/user/UserServices';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../../../navigation';
 
+
+export type RootNavigationType = NativeStackNavigationProp<
+    RootStackParamList,
+    any
+>;
 function SocialMediaLogin() {
 
     const [state, setState] = useState()
     const dispatch = useDispatch();
+    const navigation = useNavigation<RootNavigationType>();
+
 
     const onAppleButtonPress = async () => {
         try {
@@ -139,11 +150,11 @@ function SocialMediaLogin() {
             console.log("fb data+++", userData)
             await dispatch(
                 userSocialLogin({
-                    name: userData?.name || 'Apple Name',
+                    name: userData?.name || 'FB Name',
                     social_id: userData?.id,
                     device_id: new Date().getTime()?.toString(),
                     platform: Platform.OS,
-                    email: userData?.email
+                    email: userData?.email || 'fbtest'
                 }),
             );
         }
