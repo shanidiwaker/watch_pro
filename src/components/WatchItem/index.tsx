@@ -72,7 +72,7 @@ export function WatchItem(props: IWatchItem) {
     liked,
     is_post,
   } = item;
-  console.log('shop', shop);
+  // console.log('shop', shop);
   const { isOpen, onOpen, onClose } = useDisclose();
   const { t } = useTranslation();
   return (

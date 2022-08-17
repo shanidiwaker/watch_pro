@@ -24,6 +24,8 @@ function Reels(props: ReelsScreenProps) {
   const { route, navigation } = props;
   const { feedList, isLoading, refetch, isFetchingNextPage, onEndReached } =
     useReels(route?.params?.id, route?.params?.reel);
+  console.log(route?.params?.id);
+
   const { displayHeight, setDisplayHeight } = useContext(AppContext);
   const refFlatList = useRef();
   const [scrollY] = useState(new Animated.Value(0));

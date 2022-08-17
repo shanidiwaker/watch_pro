@@ -1,26 +1,30 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable no-unneeded-ternary */
-import {useNavigation} from '@react-navigation/native';
-import {ChevronLeftIcon, Divider, useColorModeValue, View} from 'native-base';
+import { useNavigation } from '@react-navigation/native';
+import { ChevronLeftIcon, Divider, useColorModeValue, View } from 'native-base';
 import React from 'react';
-import {Share, StyleSheet, TouchableOpacity} from 'react-native';
+import { Share, StyleSheet, TouchableOpacity } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import Feather from 'react-native-vector-icons/Feather';
-import {theme} from '../theme';
-import {textEllipsis} from '../utils';
-import {RootNavigationType} from './Header';
-import {Caption, Title} from './Typography';
+import { theme } from '../theme';
+import { textEllipsis } from '../utils';
+import { RootNavigationType } from './Header';
+import { Caption, Title } from './Typography';
+import { useReels } from '../screens/Reels/Query/useFetchReels';
+
 
 interface IHeader {
   title: string;
   bg?: string;
   color?: string;
   isShare?: boolean;
-  profile?: {name: string; profilePic: string; user_id: number};
+  profile?: { name: string; profilePic: string; user_id: number };
 }
 function HeaderSimple(props: IHeader) {
-  const {title, bg, color, isShare, profile} = props;
+  const { title, bg, color, isShare, profile } = props;
   const navigation = useNavigation<RootNavigationType>();
+  const { route } = props;
+  const { feedList } = useReels(route?.params?.id, route?.params?.reel);
 
   const borderColor = useColorModeValue(
     theme.colors.gray[100],
@@ -51,9 +55,14 @@ function HeaderSimple(props: IHeader) {
       console.log('error', error);
     }
   };
+  // const goBack = () => {
+  //   feedList.indexOf('0') !== -1 && feedList.splice(feedList.indexOf('0'), 1)
+  //   navigation.goBack()
+  //   console.log('listtttttttt123345678890', feedList);
+  // }
 
   const handlePressProfile = () => {
-    navigation.navigate('UserProfile', {user_id: Number(profile?.user_id)});
+    navigation.navigate('UserProfile', { user_id: Number(profile?.user_id) });
   };
   return (
     <>
@@ -69,7 +78,7 @@ function HeaderSimple(props: IHeader) {
         borderColor={borderColor}>
         <View flexDirection="row" alignItems="center">
           <TouchableOpacity
-            style={{padding:10}}
+            style={{ padding: 10 }}
             activeOpacity={0.9}
             onPress={navigation.goBack}>
             <ChevronLeftIcon color={fontColor} />
@@ -78,7 +87,7 @@ function HeaderSimple(props: IHeader) {
             <TouchableOpacity activeOpacity={0.9} onPress={handlePressProfile}>
               <View flexDirection="row" alignItems="center">
                 <FastImage
-                  source={{uri: profile?.profilePic}}
+                  source={{ uri: profile?.profilePic }}
                   style={styles.img}
                 />
                 <Caption>{textEllipsis(profile?.name || '', 15)}</Caption>

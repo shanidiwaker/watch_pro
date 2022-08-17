@@ -90,7 +90,7 @@ function Home() {
     if (products) {
       setProductList(products?.data || []);
       // setImg(products?.data[0]?.thamblain)
-      console.log('p=============>list====>', products?.data);
+      // console.log('p=============>list====>', products?.data);
     }
   }, [products]);
 
@@ -118,7 +118,7 @@ function Home() {
     try {
       const response: IResponseDataProduct = await reelsbyCategory(id);
       if (response?.status === true) {
-        console.log('called=======>======>', response);
+        // console.log('called=======>======>', response);
 
         setProductList(response?.data);
       } else {

@@ -1,11 +1,11 @@
 /**
  * @format
  */
-import {useCallback} from 'react';
-import {useInfiniteQuery} from 'react-query';
-import {config} from '../../../config';
+import { useCallback } from 'react';
+import { useInfiniteQuery } from 'react-query';
+import { config } from '../../../config';
 import client from '../../../utils/ApiClient';
-import {QueryKeys} from '../../../utils/QueryKeys';
+import { QueryKeys } from '../../../utils/QueryKeys';
 
 export interface INewsFeedResponseData {
   data: any[];
@@ -33,18 +33,18 @@ async function fetchFeeds(
     const response: INewsFeedResponseData = await client.get(url);
 
     if (response.data.length > 0 && response.status) {
-      return {data: response.data, pageNo: pageNumber, hasNext: true};
+      return { data: response.data, pageNo: pageNumber, hasNext: true };
     }
-    return {data: [], pageNo: pageNumber, hasNext: false};
+    return { data: [], pageNo: pageNumber, hasNext: false };
   } catch (error) {
-    return {data: [], pageNo: pageNumber, hasNext: false};
+    return { data: [], pageNo: pageNumber, hasNext: false };
   }
 }
 
 const useReels = (id: number, reel: number, enabled = true) => {
   const listQuery = useInfiniteQuery(
     QueryKeys.reels,
-    ({pageParam = 1}) => fetchFeeds(id, pageParam, reel),
+    ({ pageParam = 1 }) => fetchFeeds(id, pageParam, reel),
     {
       getNextPageParam: lastPage => {
         return lastPage?.hasNext ? lastPage.pageNo + 1 : null;
@@ -53,7 +53,7 @@ const useReels = (id: number, reel: number, enabled = true) => {
     },
   );
 
-  const {data, fetchNextPage, hasNextPage, isFetchingNextPage} = listQuery;
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = listQuery;
 
   const feedList: any[] = [];
 
@@ -71,6 +71,7 @@ const useReels = (id: number, reel: number, enabled = true) => {
     });
   }
 
+
   return {
     ...listQuery,
     feedList,
@@ -79,11 +80,11 @@ const useReels = (id: number, reel: number, enabled = true) => {
 };
 
 const useSingleNewsFeed = (documentId: string, enabled = true) => {
-  const {feedList} = useReels(enabled);
+  const { feedList } = useReels(enabled);
   const newsFeed: any = feedList.find(
     item => item.documentId === documentId,
   ) as any;
-  return {newsFeed};
+  return { newsFeed };
 };
 
-export {useReels, useSingleNewsFeed};
+export { useReels, useSingleNewsFeed };

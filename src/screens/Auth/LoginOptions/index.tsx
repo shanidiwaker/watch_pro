@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {useNavigation} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import React, {useState} from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React, { useEffect, useState } from 'react';
 import {
   Image,
   ImageBackground,
@@ -16,17 +16,22 @@ import {
 import Feather from 'react-native-vector-icons/Feather';
 import jwt_decode from "jwt-decode";
 
-import {useDispatch} from 'react-redux';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {appleAuth} from '@invertase/react-native-apple-authentication';
+import { useDispatch } from 'react-redux';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { appleAuth } from '@invertase/react-native-apple-authentication';
 import images from '../../../assets/images';
 import CustomButton from '../../../components/CustomButton';
 import SeparatorLine from '../../../components/SeparatorLine';
-import {Caption, SubTitle, Title} from '../../../components/Typography/index';
-import {RootStackParamList} from '../../../navigation';
-import {theme} from '../../../theme';
-import {useConfirmModal} from '../../../components/CofirmationModel';
-import {userAppleLogin} from '../../../redux/reducers/user/UserServices';
+import { Caption, SubTitle, Title } from '../../../components/Typography/index';
+import { RootStackParamList } from '../../../navigation';
+import { theme } from '../../../theme';
+import { useConfirmModal } from '../../../components/CofirmationModel';
+import { userAppleLogin } from '../../../redux/reducers/user/UserServices';
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+  statusCodes,
+} from '@react-native-google-signin/google-signin';
 
 export type RootNavigationType = NativeStackNavigationProp<
   RootStackParamList,
@@ -39,6 +44,30 @@ function LoginOptions() {
   const inset = useSafeAreaInsets();
   const confirm = useConfirmModal();
   const dispatch = useDispatch();
+  const [state, setState] = useState()
+
+  useEffect(() => {
+    GoogleSignin.configure();
+  }, []);
+  const signIn = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      setState({ userInfo });
+      console.log(userInfo);
+
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        // user cancelled the login flow
+      } else if (error.code === statusCodes.IN_PROGRESS) {
+        // operation (e.g. sign in) is in progress already
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        // play services not available or outdated
+      } else {
+        // some other error happened
+      }
+    }
+  };
 
   const handleTerm = () => {
     confirm?.show?.({
@@ -70,8 +99,8 @@ function LoginOptions() {
       );
       // use credentialState response to ensure the user is authenticated
       if (credentialState === appleAuth.State.AUTHORIZED) {
-        console.log("appleAuthRequestResponse",appleAuthRequestResponse)
-        const {email} = await jwt_decode(
+        console.log("appleAuthRequestResponse", appleAuthRequestResponse)
+        const { email } = await jwt_decode(
           appleAuthRequestResponse.identityToken,
         );
         let name = '';
@@ -106,7 +135,7 @@ function LoginOptions() {
       source={images.LOGIN_OPTIONS_BACKGROUND}
       style={[style.fullScreen, style.alignCenter]}>
       <StatusBar translucent barStyle="light-content" />
-      <View style={[style.wrapper, {paddingTop: inset.top}, style.justify]}>
+      <View style={[style.wrapper, { paddingTop: inset.top }, style.justify]}>
         <Caption style={style.headerTitle} numberOfLines={3} lineHeight={40}>
           Choose a <Caption style={style.headerTitleWatch}>watch</Caption> that
           suits you
@@ -180,6 +209,13 @@ function LoginOptions() {
             </TouchableOpacity>
           )}
         </View>
+        <GoogleSigninButton
+          style={{ width: 192, height: 48 }}
+          size={GoogleSigninButton.Size.Wide}
+          color={GoogleSigninButton.Color.Dark}
+          onPress={signIn}
+        // disabled={state.isSigninInProgress}
+        />
       </View>
     </ImageBackground>
   );
@@ -190,7 +226,7 @@ const style = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-  wrapper: {width: '75%', height: '100%', alignItems: 'center'},
+  wrapper: { width: '75%', height: '100%', alignItems: 'center' },
   headerTitle: {
     color: theme.colors.appWhite['700'],
     fontSize: 40,
@@ -216,8 +252,8 @@ const style = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  alignCenter: {alignItems: 'center'},
-  main: {width: '100%', alignItems: 'center'},
+  alignCenter: { alignItems: 'center' },
+  main: { width: '100%', alignItems: 'center' },
   main__checkbox_wrapper: {
     marginVertical: 30,
     width: '100%',
@@ -225,7 +261,7 @@ const style = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  white: {backgroundColor: theme.colors.appWhite['700']},
+  white: { backgroundColor: theme.colors.appWhite['700'] },
   caption: {
     fontSize: 16,
     marginLeft: 10,
@@ -242,16 +278,16 @@ const style = StyleSheet.create({
     // width: '70%',
     flexWrap: 'wrap',
   },
-  create__wrapper: {flexDirection: 'row', marginTop: 40, alignItems: 'center'},
+  create__wrapper: { flexDirection: 'row', marginTop: 40, alignItems: 'center' },
   create__title: {
     color: theme.colors.appWhite['700'],
     fontSize: 16,
     letterSpacing: 1,
     marginLeft: 8,
   },
-  img: {width: 24, height: 24, resizeMode: 'contain'},
-  opacity: {opacity: 0.6},
-  justify: {justifyContent: 'space-around'},
+  img: { width: 24, height: 24, resizeMode: 'contain' },
+  opacity: { opacity: 0.6 },
+  justify: { justifyContent: 'space-around' },
 });
 export default LoginOptions;
 
