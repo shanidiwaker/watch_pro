@@ -1,37 +1,37 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, {useEffect} from 'react';
-import {ScrollView, TouchableOpacity, View as VIEW} from 'react-native';
-import {useIsFocused, useNavigation} from '@react-navigation/native';
-import {View, Divider, Spinner, useColorModeValue} from 'native-base';
+import React, { useEffect } from 'react';
+import { ScrollView, TouchableOpacity, View as VIEW } from 'react-native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
+import { View, Divider, Spinner, useColorModeValue } from 'native-base';
 import Feather from 'react-native-vector-icons/Feather';
-import {useTranslation} from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import IoniconsIcon from 'react-native-vector-icons/Ionicons';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {RootStackParamList} from '../../navigation';
-import {RootNavigationType} from '../../components/Header';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../navigation';
+import { RootNavigationType } from '../../components/Header';
 import CustomImageSlider from '../../components/imageSlider';
-import {Caption, SubTitle, Title} from '../../components/Typography';
+import { Caption, SubTitle, Title } from '../../components/Typography';
 import {
   IProduct,
   useFetchProductDetails,
 } from './Queries/useFetchProductDetails';
 import Error from '../../components/Error';
-import {useCartOperations} from '../Cart/Queries/useCartOperations';
-import {useFetchCartItems} from '../Cart/Queries/useFetchCartItems';
-import {useProductOperations} from './Queries/useProductOperations';
-import {useFetchTrending} from './Queries/useFetchTrending';
-import {theme} from '../../theme';
-import {dateFormatter} from '../../utils';
+import { useCartOperations } from '../Cart/Queries/useCartOperations';
+import { useFetchCartItems } from '../Cart/Queries/useFetchCartItems';
+import { useProductOperations } from './Queries/useProductOperations';
+import { useFetchTrending } from './Queries/useFetchTrending';
+import { theme } from '../../theme';
+import { dateFormatter } from '../../utils';
 import CommentComponent from './CommentComponent';
 import DetailComponent from './DetailComponent';
 import TrendingComponent from './TrendingComponent';
 import useUserInfo from '../../hooks/useUserInfo';
 import HeaderSimple from '../../components/HeaderSimple';
-import {useEvent} from 'react-native-reanimated';
+import { useEvent } from 'react-native-reanimated';
 
 export type ProfileScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -39,11 +39,11 @@ export type ProfileScreenProps = NativeStackScreenProps<
 >;
 
 function ProductDetails(props: ProfileScreenProps) {
-  const {route} = props;
+  const { route } = props;
   const inset = useSafeAreaInsets();
   const isFocused = useIsFocused();
-  const {t} = useTranslation();
-  const {user: loggedinUser} = useUserInfo();
+  const { t } = useTranslation();
+  const { user: loggedinUser } = useUserInfo();
   const {
     data: details,
     error,
@@ -52,11 +52,11 @@ function ProductDetails(props: ProfileScreenProps) {
   } = useFetchProductDetails(route.params.id);
   // const [intoCart, setIntoCart] = useState(false);
   const product = details as IProduct;
-  const {addtoCart, removetoCart} = useCartOperations();
-  const {data: cartItem} = useFetchCartItems();
+  const { addtoCart, removetoCart } = useCartOperations();
+  const { data: cartItem } = useFetchCartItems();
   const navigation = useNavigation<RootNavigationType>();
-  const {collectProduct, likeProduct} = useProductOperations(route.params.id);
-  const {data: trendings, isLoading: isTredingLoading} = useFetchTrending();
+  const { collectProduct, likeProduct } = useProductOperations(route.params.id);
+  const { data: trendings, isLoading: isTredingLoading } = useFetchTrending();
   // React.useEffect(() => {
   //   if (cartItem?.data && cartItem?.data?.length > 0 && product) {
   //     const isPresent = cartItem?.data?.filter(
@@ -174,7 +174,7 @@ function ProductDetails(props: ProfileScreenProps) {
             theme.colors.black[200],
           ),
         }}
-        contentContainerStyle={{paddingBottom: inset.top + 10}}
+        contentContainerStyle={{ paddingBottom: inset.top + 10 }}
         showsVerticalScrollIndicator={false}>
         {route.params?.status ? (
           <View
@@ -189,7 +189,7 @@ function ProductDetails(props: ProfileScreenProps) {
               {route.params?.status}
             </SubTitle>
           </View>
-        ):null}
+        ) : null}
         <CustomImageSlider isProdiuct={false} slider={images} />
 
         <View
@@ -209,7 +209,7 @@ function ProductDetails(props: ProfileScreenProps) {
                   <FontAwesome
                     name="heart"
                     size={25}
-                    style={{color: theme.colors.red[900]}}
+                    style={{ color: theme.colors.red[900] }}
                   />
                 ) : (
                   <Feather
@@ -241,7 +241,7 @@ function ProductDetails(props: ProfileScreenProps) {
                   <FontAwesome
                     name="star"
                     size={25}
-                    style={{color: theme.colors.red[900]}}
+                    style={{ color: theme.colors.red[900] }}
                   />
                 ) : (
                   <Feather
@@ -405,7 +405,7 @@ function ProductDetails(props: ProfileScreenProps) {
               <ScrollView
                 showsHorizontalScrollIndicator={false}
                 horizontal
-                
+
                 contentContainerStyle={{
                   // flexGrow: 1,
                   // flex: 1,

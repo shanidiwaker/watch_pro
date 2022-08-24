@@ -24,7 +24,7 @@ function Reels(props: ReelsScreenProps) {
   const { route, navigation } = props;
   const { feedList, isLoading, refetch, isFetchingNextPage, onEndReached } =
     useReels(route?.params?.id, route?.params?.reel);
-  console.log(route?.params?.id);
+  console.log('reellllllllll', route?.params?.id);
 
   const { displayHeight, setDisplayHeight } = useContext(AppContext);
   const refFlatList = useRef();
@@ -90,12 +90,15 @@ function Reels(props: ReelsScreenProps) {
   };
 
   const renderItem = ({ item, index }) => {
+    // console.log('rellllllll', item);
+
     const scrollIndex = scrollInfo?.index || 0;
     const isNext = index >= scrollIndex - 1 && index <= scrollIndex + 1;
     return (
       <FeedRow
         item={item}
         isNext={isNext}
+        // reelId={item?.id}
         index={index}
         handleLike={handleLike}
         handleFollow={handleFollow}

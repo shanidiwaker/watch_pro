@@ -1,28 +1,28 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react-native/no-inline-styles */
-import React, {useEffect, useState} from 'react';
-import {useTranslation} from 'react-i18next';
-import {useColorModeValue, View, Divider, Spinner} from 'native-base';
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useColorModeValue, View, Divider, Spinner } from 'native-base';
 import {
   StyleSheet,
   TextInput,
   ScrollView,
-  TouchableOpacity,Alert
+  TouchableOpacity, Alert
 } from 'react-native';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
-import {FormikProps, useFormik} from 'formik';
+import { FormikProps, useFormik } from 'formik';
 import * as Yup from 'yup';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import HeaderSimple from '../../components/HeaderSimple';
-import {theme} from '../../theme';
+import { theme } from '../../theme';
 import DropDwonList from '../../components/DropDwonList';
-import {SubTitle} from '../../components/Typography';
+import { SubTitle } from '../../components/Typography';
 import InputBox from '../../components/InputBox';
 import COUNTRIES from './country.json';
-import {useSaveAddress} from './Queries/useSaveAddress';
-import {RootStackParamList} from '../../navigation';
-import {PHONE_REGEX} from '../../constants/common';
+import { useSaveAddress } from './Queries/useSaveAddress';
+import { RootStackParamList } from '../../navigation';
+import { PHONE_REGEX } from '../../constants/common';
 
 export type ProfileScreenProps = NativeStackScreenProps<
   RootStackParamList,
@@ -34,11 +34,12 @@ const validationSchema = Yup.object({
     .trim()
     .min(3, 'Invalid name!')
     .required('Full Address is required!'),
-    state: Yup.string().min(3, 'Invalid state!').required('State is required!'),
-  
+  state: Yup.string().min(3, 'Invalid state!').required('State is required!'),
+
   phone_no: Yup.string()
-    .matches(PHONE_REGEX, 'Phone number is not valid!')
-    .required('Please enter mobile'),
+    // .matches(PHONE_REGEX, 'Phone number is not valid!')
+    .required('Please enter mobile')
+    .min(8, 'Phone number not less than 08 character!'),
   username: Yup.string().min(3, 'Invalid Name!').required('Name is required!'),
   city: Yup.string().min(3, 'Invalid city!').required('City is required!'),
 
@@ -46,7 +47,7 @@ const validationSchema = Yup.object({
 
 interface MyFormValues {
   //firstName: string;
- // lastName: string;
+  // lastName: string;
   username: string;
   phone_no: string;
   //id?: '';
@@ -59,11 +60,11 @@ interface MyFormValues {
 
 export default function ShippingAdress(props: ProfileScreenProps) {
   const [t, i18] = useTranslation();
-  const {route} = props;
+  const { route } = props;
   const data = route.params?.data;
   const inset = useSafeAreaInsets();
   const [states, setStates] = useState<any>([]);
-  const {addAddress, editAddress} = useSaveAddress();
+  const { addAddress, editAddress } = useSaveAddress();
   console.log('data', JSON.stringify(data, null, 2));
   const initialValues = {
     full_address: data?.full_address || '',
@@ -111,11 +112,11 @@ export default function ShippingAdress(props: ProfileScreenProps) {
     setFieldValue('state', text);
   };
 
-  const showAlert = () =>{
+  const showAlert = () => {
     Alert.alert(
-       'You need to...'
+      'You need to...'
     )
- }
+  }
 
   return (
     <View
@@ -124,7 +125,7 @@ export default function ShippingAdress(props: ProfileScreenProps) {
         width: '100%',
         paddingTop: inset.top,
         paddingHorizontal: 10,
-        justifyContent:'center',
+        justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: useColorModeValue(
           theme.colors.appWhite[600],
@@ -188,13 +189,13 @@ export default function ShippingAdress(props: ProfileScreenProps) {
         />
         <InputBox
           value={values.pincode}
-          placeholder="Pine Code"
+          placeholder="Pin Code"
           onChangeText={handleChange('pincode')}
           onBlur={handleBlur('pincode')}
           error={touched.pincode && errors.pincode}
         />
         <View
-         
+
           mt={5}>
           <TouchableOpacity
             style={[
@@ -207,10 +208,10 @@ export default function ShippingAdress(props: ProfileScreenProps) {
               },
             ]}
             onPress={() => {
-              console.log("SDa",isSubmitting)
+              console.log("SDa", isSubmitting)
               //if (!isSubmitting) {
-                handleSubmit();
-            //  }
+              handleSubmit();
+              //  }
             }}>
             {isSubmitting ? (
               <Spinner />

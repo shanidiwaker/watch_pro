@@ -101,7 +101,6 @@ export const userSocialLogin = (data: ISocialLoginRequestData) => {
           );
           // console.log('response', JSON.stringify(response, null, 2));
           const resData = { accessToken: '', shop: null, user: null };
-          console.log('start-=====>', response);
 
           if (response.status === 'true') {
 
@@ -112,7 +111,6 @@ export const userSocialLogin = (data: ISocialLoginRequestData) => {
             if (response) {
               //
             }
-            console.log('mainssssss,====>', response);
 
             return Promise.resolve(resData);
           }

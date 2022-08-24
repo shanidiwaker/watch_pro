@@ -3,34 +3,34 @@
 /* eslint-disable global-require */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
-import {ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
-import {View, Image, Divider, useColorModeValue} from 'native-base';
+import { ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Image, Divider, useColorModeValue } from 'native-base';
 import Swipeout from 'react-native-swipeout';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import Feather from 'react-native-vector-icons/Feather';
-import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-
-import {theme} from '../../theme';
-import {Caption, SubTitle, Title} from '../../components/Typography';
-import {useCartOperations} from './Queries/useCartOperations';
-import {ICartItems, useFetchCartItems} from './Queries/useFetchCartItems';
+import { theme } from '../../theme';
+import { Caption, SubTitle, Title } from '../../components/Typography';
+import { useCartOperations } from './Queries/useCartOperations';
+import { ICartItems, useFetchCartItems } from './Queries/useFetchCartItems';
 import HeaderSimple from '../../components/HeaderSimple';
-import {useProductOperations as useProductOp} from '../ProductDetails/Queries/useProductOperations';
+import { useProductOperations as useProductOp } from '../ProductDetails/Queries/useProductOperations';
 
-import {RootNavigationType} from '../Home';
-import {useConfirmModal} from '../../components/CofirmationModel';
+import { RootNavigationType } from '../Home';
+import { useConfirmModal } from '../../components/CofirmationModel';
 // import {Link,useRoute} from '@react-navigation/native'
 
 function Cart() {
   const navigation = useNavigation<RootNavigationType>();
 
   const [selectedItem, setSelectedItem] = React.useState(0);
-  const {removetoCart} = useCartOperations();
-  const {collectProduct} = useProductOp(0);
+  const [itemPrice, setItemPrice] = React.useState(0);
+  const { removetoCart } = useCartOperations();
+  const { collectProduct } = useProductOp(0);
   const inset = useSafeAreaInsets();
   const confirm = useConfirmModal();
-  const [cartitem,setCartItem] = React.useState()
+  const [cartitem, setCartItem] = React.useState()
 
   const swipeoutBtns = [
     {
@@ -43,15 +43,28 @@ function Cart() {
     },
   ];
 
+  const { data: cartItem } = useFetchCartItems();
 
-    const {data: cartItem} = useFetchCartItems();
-    const productPrice = cartItem.data[0].product
-  
-   
+  //const productPrice = cartItem.data[0].product
+  React.useEffect(() => {
+    if (cartItem?.data?.length > 0) {
+
+      const data = cartItem.data
+      const sum = data.reduce((accumulator, object) => {
+        return accumulator + object.product[0].price;
+      }, 0);
+      console.log('cartItem', sum)
+      setItemPrice(sum)
+    }
+  })
+
+
+
 
   const handleContinue = () => {
     navigation.navigate('HomeTabs');
   };
+
 
   const checkout = () => {
     confirm?.show?.({
@@ -66,8 +79,8 @@ function Cart() {
   };
 
   const handleCollect = async (id: number) => {
-     const data = await collectProduct(id);
-    console.log('data',data.data)
+    const data = await collectProduct(id);
+    console.log('data', data.data)
   };
 
   return (
@@ -102,6 +115,7 @@ function Cart() {
             <>
               {cartItem?.data?.map((item: ICartItems) => {
                 console.log(item)
+
                 return (
                   <>
                     <Swipeout
@@ -120,7 +134,7 @@ function Cart() {
                         <View width="30%">
                           <Image
                             alt="watch2"
-                            source={{uri: item.product?.[0]?.images}}
+                            source={{ uri: item.product?.[0]?.images }}
                             style={styles.productimage}
                           />
                         </View>
@@ -286,7 +300,7 @@ function Cart() {
                       Sub Total ({cartItem?.data?.length} Item)
                     </Caption>
                     <Caption mb={3} ml={2} fontSize={18}>
-                      AED {productPrice[0].price}
+                      AED {/* {productPrice[0].price} */} {itemPrice}
                     </Caption>
                   </View>
                   <TouchableOpacity
@@ -314,7 +328,7 @@ function Cart() {
             <View justifyContent="center" alignItems="center" mt={20}>
               <View>
                 <Feather name="shopping-cart" size={150} />
-                <View style={{marginTop: 40}}>
+                <View style={{ marginTop: 40 }}>
                   <Caption>There are no items in your cart</Caption>
                 </View>
               </View>
@@ -351,7 +365,7 @@ const styles = StyleSheet.create({
     // height: '100%',
     flexGrow: 1,
   },
-  productimage: {height: 100, width: 100, borderRadius: 360},
+  productimage: { height: 100, width: 100, borderRadius: 360 },
   contact: {
     width: '100%',
     paddingBottom: 40,

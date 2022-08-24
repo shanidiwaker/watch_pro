@@ -3,8 +3,8 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable global-require */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, {useState, useRef} from 'react';
-import {View, useColorModeValue, Spinner} from 'native-base';
+import React, { useState, useRef } from 'react';
+import { View, useColorModeValue, Spinner } from 'native-base';
 import {
   Image,
   ImageBackground,
@@ -14,29 +14,30 @@ import {
   TouchableOpacity,
   View as RNView,
 } from 'react-native';
-import {useTranslation} from 'react-i18next';
-import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
-import {useNavigation} from '@react-navigation/native';
-import {DrawerNavigationProp} from '@react-navigation/drawer';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import { useTranslation } from 'react-i18next';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useNavigation } from '@react-navigation/native';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import Feather from 'react-native-vector-icons/Feather';
 import FastImage from 'react-native-fast-image';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {RootStackParamList} from '../../navigation';
-import {DrawerParamList} from '../../navigation/DrawerMenu';
-import {theme} from '../../theme';
-import {Caption} from '../../components/Typography';
-import {useProfile} from '../Me/Queries/useProfile';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { RootStackParamList } from '../../navigation';
+import { DrawerParamList } from '../../navigation/DrawerMenu';
+import { theme } from '../../theme';
+import { Caption } from '../../components/Typography';
+import { useProfile } from '../Me/Queries/useProfile';
 import useUserInfo from '../../hooks/useUserInfo';
 import MediaPicker, {
   IAssetType,
   PickerHandle,
 } from '../../components/MediaPicker';
-import {IMedia} from '../Add';
-import {validateImage} from '../../utils/validator';
-import {useEditProfile} from '../EditUser/Queries/useEditProfile';
+import { IMedia } from '../Add';
+import { validateImage } from '../../utils/validator';
+import { useEditProfile } from '../EditUser/Queries/useEditProfile';
 import HeaderSimple from '../../components/HeaderSimple';
 import FieldComponent from './FieldComponent';
+import images from '../../assets/images';
 
 export type RootNavigationType = NativeStackNavigationProp<
   RootStackParamList,
@@ -45,8 +46,8 @@ export type RootNavigationType = NativeStackNavigationProp<
 export type DrawerNavigationType = DrawerNavigationProp<DrawerParamList, any>;
 
 function EditProfile() {
-  const {data: profile, isLoading} = useProfile();
-  const {t} = useTranslation();
+  const { data: profile, isLoading } = useProfile();
+  const { t } = useTranslation();
   const [cover, setCover] = useState<IMedia[] | null>(null);
   const [isUpdating, setUpdating] = useState<string>('');
   const coverPicker = React.useRef<PickerHandle>(null);
@@ -54,8 +55,8 @@ function EditProfile() {
   const navigation = useNavigation<RootNavigationType>();
   const [uploadingProfile, setUploadingProfile] = useState<boolean>(false);
   const [uploadingCover, setUploadingCover] = useState<boolean>(false);
-  const {user} = useUserInfo();
-  const {updateProfile} = useEditProfile();
+  const { user } = useUserInfo();
+  const { updateProfile } = useEditProfile();
   const inset = useSafeAreaInsets();
   const nameRef = useRef();
   if (isLoading) {
@@ -210,10 +211,9 @@ function EditProfile() {
         showsVerticalScrollIndicator={false}>
         <RNView style={styles.coverWrapper}>
           <View style={styles.bgImg}>
-            <FastImage
+            {user?.cover_photo ? <FastImage
               source={{
-                uri: user?.cover_photo,
-                // 'https://www.aphki.or.id//post/avatar.png',
+                uri: user?.cover_photo
               }}
               style={[
                 styles.bgImg,
@@ -221,7 +221,20 @@ function EditProfile() {
                   position: 'absolute',
                 },
               ]}
-            />
+            /> :
+              <FastImage
+                source={
+                  // images.IMAGE_Gallry
+                  { uri: 'https://www.freeiconspng.com/uploads/photo-album-icon-png-14.png', }
+                }
+                resizeMode='contain'
+                style={[
+                  styles.bgImg1,
+                  {
+                    position: 'absolute',
+                  },
+                ]}
+              />}
             {uploadingCover && (
               <View
                 width="100%"
@@ -285,12 +298,17 @@ function EditProfile() {
               }}
               style={styles.img}
             /> */}
-            <FastImage
+            {user?.image ? <FastImage
               source={{
-                uri: user?.image,
+                uri: user?.image
+                // ||
+                //   'https://www.freeiconspng.com/uploads/user-login-icon-14.png',
               }}
               style={styles.img}
-            />
+            /> :
+              <View style={styles.img}>
+                <Feather name="user" size={52} />
+              </View>}
           </RNView>
         </RNView>
 
@@ -352,12 +370,12 @@ function EditProfile() {
           />
         </View>
         <MediaPicker
-          options={{mediaType: 'photo', selectionLimit: 1}}
+          options={{ mediaType: 'photo', selectionLimit: 1 }}
           ref={coverPicker}
           onSelectImage={onSelectCover}
         />
         <MediaPicker
-          options={{mediaType: 'photo', selectionLimit: 1}}
+          options={{ mediaType: 'photo', selectionLimit: 1 }}
           ref={profilePicker}
           onSelectImage={onSelectPic}
         />
@@ -370,16 +388,31 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 200,
     alignSelf: 'flex-end',
+    borderWidth: 0.2
     // justifyContent: 'center',
   },
-  img: {height: 80, width: 80, borderRadius: 360},
+  bgImg1: {
+    width: '100%',
+    height: 150,
+    alignSelf: 'flex-end',
+    // borderWidth: 0.2
+    // justifyContent: 'center',
+  },
+  img: {
+    height: 80,
+    width: 80,
+    borderRadius: 360,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 0.2
+  },
   coverText: {
     backgroundColor: 'rgba(0,0,0,0.5)',
     width: '100%',
     justifyContent: 'center',
   },
-  coverWrapper: {width: '100%', height: 250},
-  avatarWrapper: {marginTop: -48, alignSelf: 'center'},
+  coverWrapper: { width: '100%', height: 250 },
+  avatarWrapper: { marginTop: -48, alignSelf: 'center' },
 
   // render list
 });

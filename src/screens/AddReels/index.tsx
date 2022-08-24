@@ -223,7 +223,7 @@ function AddReel(props: EditScreenProps) {
   // create thumbnail
   createThumbnail({
     url: video,
-    timeStamp: 10000,
+    timeStamp: 1000,
   })
     .then(response => {
       setFieldValue('thamblain', {
@@ -247,7 +247,7 @@ function AddReel(props: EditScreenProps) {
           theme.colors.black[200],
         ),
       }}>
-      <HeaderSimple bg="transparent" title="Add Post" />
+      <HeaderSimple bg="transparent" title="Add Reel" />
       <KeyboardAwareScrollView
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={[
@@ -351,7 +351,7 @@ function AddReel(props: EditScreenProps) {
                 theme.colors.black[2000],
                 theme.colors.appWhite[600],
               )}>
-              Upload Photo
+              Upload Reel
             </Title>
             <Caption
               color={useColorModeValue(
@@ -412,6 +412,7 @@ function AddReel(props: EditScreenProps) {
             }}>
             {isSubmitting ? (
               <Spinner />
+              // <Spinner mb={20} mt={20} />
             ) : (
               <SubTitle
                 style={styles.customer}
@@ -420,7 +421,7 @@ function AddReel(props: EditScreenProps) {
                   theme.colors.appWhite[600],
                 )}
                 fontSize={14}>
-                Submit Post
+                Submit Reel
               </SubTitle>
             )}
           </TouchableOpacity>

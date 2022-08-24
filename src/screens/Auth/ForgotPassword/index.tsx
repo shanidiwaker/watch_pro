@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {useNavigation} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {FormikHelpers, FormikProps, useFormik} from 'formik';
-import React, {useMemo} from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { FormikHelpers, FormikProps, useFormik } from 'formik';
+import React, { useMemo } from 'react';
 import {
   Image,
   ImageBackground,
@@ -11,19 +11,19 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {useDispatch} from 'react-redux';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import images from '../../../assets/images';
 import CustomButton from '../../../components/CustomButton';
 import HeaderSimple from '../../../components/HeaderSimple';
 import SeparatorLine from '../../../components/SeparatorLine';
 import CustomTextInput from '../../../components/TextInput';
-import {Caption, Title} from '../../../components/Typography/index';
-import {RootStackParamList} from '../../../navigation';
-import {forgotPassword} from '../../../redux/reducers/user/UserServices';
-import {theme} from '../../../theme';
+import { Caption, Title } from '../../../components/Typography/index';
+import { RootStackParamList } from '../../../navigation';
+import { forgotPassword } from '../../../redux/reducers/user/UserServices';
+import { theme } from '../../../theme';
 
 export type RootNavigationType = NativeStackNavigationProp<
   RootStackParamList,
@@ -98,14 +98,14 @@ function ForgotPassword() {
       style={styles.alignCenter}>
       <SafeAreaView style={styles.fullScreen}>
         <HeaderSimple
-          title="Forogt Password"
+          title="Forgot Password"
           bg="transparent"
           color={theme.colors.appWhite['600']}
         />
 
         <KeyboardAwareScrollView
           keyboardShouldPersistTaps="always"
-          style={{flex: 1}}
+          style={{ flex: 1 }}
           contentContainerStyle={{
             justifyContent: 'center',
             alignItems: 'center',
@@ -127,7 +127,7 @@ function ForgotPassword() {
               value={values.username}
               placeholder="Username"
               onPressHandler={handleChange('username')}
-           
+
               keyboardType="email-address"
               error={touched.username && errors.username}
               onBlurHandler={handleBlur('username')}
@@ -139,7 +139,7 @@ function ForgotPassword() {
               onPressHandler={() => {
                 handleSubmit();
               }}
-              // isDisable={!isValidate || isSubmitting}
+            // isDisable={!isValidate || isSubmitting}
             />
 
             <SeparatorLine />
@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
     height: '100%',
   },
 
-  alignCenter: {alignItems: 'center'},
+  alignCenter: { alignItems: 'center' },
 
   section__LockIcon_outer: {
     width: 90,
@@ -206,8 +206,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  section__lockIcon_img: {width: 42, height: 42},
-  margin_vertical: {marginVertical: 25},
+  section__lockIcon_img: { width: 42, height: 42 },
+  margin_vertical: { marginVertical: 25 },
   caption: {
     color: theme.colors.appWhite['700'],
     fontSize: 12,
@@ -233,5 +233,5 @@ const styles = StyleSheet.create({
     fontWeight: '400',
     letterSpacing: 1,
   },
-  opacity: {opacity: 0.6},
+  opacity: { opacity: 0.6 },
 });

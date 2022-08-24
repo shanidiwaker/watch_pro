@@ -1,21 +1,21 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
-import {useTranslation} from 'react-i18next';
-import {useColorModeValue, View, Divider, Spinner} from 'native-base';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useColorModeValue, View, Divider, Spinner } from 'native-base';
 import {
   StyleSheet,
   TextInput,
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import {FormikProps, useFormik} from 'formik';
+import { FormikProps, useFormik } from 'formik';
 import * as Yup from 'yup';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import HeaderSimple from '../../components/HeaderSimple';
-import {theme} from '../../theme';
+import { theme } from '../../theme';
 import DropDwonList from '../../components/DropDwonList';
-import {SubTitle} from '../../components/Typography';
+import { SubTitle } from '../../components/Typography';
 import InputBox from '../../components/InputBox';
 import COUNTRIES from './country.json';
 import CustomButton from '../../components/CustomButton';
@@ -143,6 +143,7 @@ export default function ShippingAdress() {
         />
         <InputBox
           value={values.phone_no}
+          maxLength
           placeholder="Phone Number"
           onChangeText={handleChange('phone_no')}
           onBlur={handleBlur('phone_no')}

@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable global-require */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, {useEffect, useState} from 'react';
-import {View, Divider, useColorModeValue, Spinner} from 'native-base';
+import React, { useEffect, useState } from 'react';
+import { View, Divider, useColorModeValue, Spinner } from 'native-base';
 import {
   Image,
   ImageBackground,
@@ -13,32 +13,32 @@ import {
   TouchableOpacity,
   View as RNView,
 } from 'react-native';
-import {useTranslation} from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import MasonryList from '@react-native-seoul/masonry-list';
-import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import Feather from 'react-native-vector-icons/Feather';
-import {useIsFocused, useNavigation} from '@react-navigation/native';
-import {DrawerNavigationProp} from '@react-navigation/drawer';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
 import FastImage from 'react-native-fast-image';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {RootStackParamList} from '../../navigation';
-import {DrawerParamList} from '../../navigation/DrawerMenu';
-import {theme} from '../../theme';
-import {Caption, SubTitle, Title} from '../../components/Typography';
-import {ICommon, useProfile} from './Queries/useProfile';
-import {WatchItem} from '../../components/WatchItem';
-import {useProductOperations} from '../Home/Queries/useProductOperations';
-import {IProducts} from '../Home/Queries/useFetchProducts';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '../../navigation';
+import { DrawerParamList } from '../../navigation/DrawerMenu';
+import { theme } from '../../theme';
+import { Caption, SubTitle, Title } from '../../components/Typography';
+import { ICommon, useProfile } from './Queries/useProfile';
+import { WatchItem } from '../../components/WatchItem';
+import { useProductOperations } from '../Home/Queries/useProductOperations';
+import { IProducts, IResponseData, useFetchProducts } from '../Home/Queries/useFetchProducts';
 import useUserInfo from '../../hooks/useUserInfo';
-import {useConfirmModal} from '../../components/CofirmationModel';
+import { useConfirmModal } from '../../components/CofirmationModel';
 import MediaPicker, {
   IAssetType,
   PickerHandle,
 } from '../../components/MediaPicker';
-import {IMedia} from '../Add';
-import {validateImage} from '../../utils/validator';
-import {useEditProfile} from '../EditUser/Queries/useEditProfile';
-import {textEllipsis} from '../../utils';
+import { IMedia } from '../Add';
+import { validateImage } from '../../utils/validator';
+import { useEditProfile } from '../EditUser/Queries/useEditProfile';
+import { textEllipsis } from '../../utils';
 
 export type RootNavigationType = NativeStackNavigationProp<
   RootStackParamList,
@@ -47,18 +47,20 @@ export type RootNavigationType = NativeStackNavigationProp<
 export type DrawerNavigationType = DrawerNavigationProp<DrawerParamList, any>;
 
 function Me() {
-  const {data: profile, isLoading} = useProfile();
-  const {t} = useTranslation();
+  const { data: profile, isLoading } = useProfile();
+  // const { data: profile, isLoading } = useFetchProducts();
+  const { t } = useTranslation();
+  // const [renderData, setRenderData] = useState<IResponseData[] | null>();
   const [renderData, setRenderData] = useState<ICommon[] | null>();
   const [selected, setSelected] = useState('post');
   const [cover, setCover] = useState(null);
   const coverPicker = React.useRef<PickerHandle>(null);
   const navigation = useNavigation<RootNavigationType>();
   const inset = useSafeAreaInsets();
-  const {likePeoduct, deleteProduct: productDelete} = useProductOperations();
-  const {user} = useUserInfo();
+  const { likePeoduct, deleteProduct: productDelete } = useProductOperations();
+  const { user } = useUserInfo();
   const confirm = useConfirmModal();
-  const {updateProfile} = useEditProfile();
+  const { updateProfile } = useEditProfile();
   const isFocused = useIsFocused();
 
   useEffect(() => {
@@ -70,6 +72,7 @@ function Me() {
   useEffect(() => {
     if (!isLoading) {
       setRenderData(profile?.Post);
+      console.log('lllllllll===>', profile);
     }
   }, [isLoading, profile?.Post]);
 
@@ -111,7 +114,7 @@ function Me() {
   };
 
   const editProduct = (id: number) => {
-    navigation.navigate('EditProduct', {id});
+    navigation.navigate('EditProduct', { id });
   };
 
   const onSelectCoverMedia = () => {
@@ -138,7 +141,7 @@ function Me() {
               name: fileName,
             });
             const initialValues = {
-              image: [{uri: user?.image}],
+              image: [{ uri: user?.image }],
               cover_photo: tempImages,
               username: profile?.User?.username || '',
               mobile_number: profile?.User?.mobile_number?.toString() || '',
@@ -169,8 +172,10 @@ function Me() {
     });
   };
 
-  const renderItem: ListRenderItem<IProducts> = ({item}) => {
+  const renderItem: ListRenderItem<IProducts> = ({ item }) => {
     item.images = item?.image;
+    // console.log(item);
+
     return (
       <WatchItem
         item={item}
@@ -209,7 +214,7 @@ function Me() {
                 // uri: user?.cover_photo,
                 uri:
                   user?.cover_photo ||
-                  'https://www.freeiconspng.com/thumbs/camera-icon/camera-icon-21.png',
+                  'https://www.freeiconspng.com/uploads/photo-album-icon-png-14.png',
                 // 'https://www.aphki.or.id//post/avatar.png',
               }}
               style={[
@@ -234,14 +239,17 @@ function Me() {
           </View>
 
           <RNView style={styles.avatarWrapper}>
-            <FastImage
+            {user?.image ? <FastImage
               source={{
                 uri:
-                  user?.image ||
-                  'https://www.freeiconspng.com/thumbs/camera-icon/camera-icon-21.png',
+                  user?.image
+                // 'https://www.freeiconspng.com/uploads/user-login-icon-14.png',
               }}
               style={styles.img}
-            />
+            /> :
+              <View style={styles.img}>
+                <Feather name="user" size={52} />
+              </View>}
           </RNView>
         </RNView>
 
@@ -517,7 +525,7 @@ function Me() {
           />
         </View>
         <MediaPicker
-          options={{mediaType: 'photo', selectionLimit: 1}}
+          options={{ mediaType: 'photo', selectionLimit: 1 }}
           ref={coverPicker}
           onSelectImage={onSelectCover}
         />
@@ -539,12 +547,16 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 160,
     alignSelf: 'flex-end',
+    borderWidth: 0.2
     // justifyContent: 'center',
   },
   img: {
     height: 96,
+    alignItems: 'center',
+    justifyContent: 'center',
     width: 96,
     borderRadius: 360,
+    borderWidth: 0.2,
     backgroundColor: theme.colors.appWhite[600],
   },
   coverText: {
@@ -555,8 +567,8 @@ const styles = StyleSheet.create({
   followButton: {
     width: '80%',
   },
-  coverWrapper: {width: '100%', height: 208},
-  avatarWrapper: {marginTop: -48, paddingLeft: 10},
+  coverWrapper: { width: '100%', height: 208 },
+  avatarWrapper: { marginTop: -48, paddingLeft: 10 },
 
   // render list
 });

@@ -82,7 +82,9 @@ export function WatchItem(props: IWatchItem) {
         if (is_post === 0 || isShop) {
           navigation.navigate('ProductDetails', { id, status: '' });
         } else {
-          navigation.navigate('Reels', { id, reel });
+          navigation.navigate('Reels', { id, reel })
+            // console.log('iddddddddddd', id);
+            ;
         }
 
         //
@@ -118,6 +120,7 @@ export function WatchItem(props: IWatchItem) {
             ) : (
               <FastImage
                 source={{ uri: thamblain }}
+                key={id}
                 // eslint-disable-next-line react-native/no-inline-styles
                 style={[
                   styles.watchImg,

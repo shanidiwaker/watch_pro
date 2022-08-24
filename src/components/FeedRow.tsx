@@ -1,12 +1,13 @@
 import React from 'react';
-import {View} from 'react-native';
-import {FeedFooter} from './FeedFooter';
-import {FeedSideBar} from './FeedSideBar';
-import {VideoComponent} from './VideoComponent';
+import { View } from 'react-native';
+import { FeedFooter } from './FeedFooter';
+import { FeedSideBar } from './FeedSideBar';
+import { VideoComponent } from './VideoComponent';
 
 function FeedRow({
   item,
   isNext,
+  // reelId,
   isVisible,
   navigation,
   index,
@@ -14,7 +15,7 @@ function FeedRow({
   transitionAnimation,
   handleFollow
 }) {
-  const {images} = item;
+  const { images } = item;
   return (
     <View>
       <VideoComponent post={images} isNext={isNext} isVisible={isVisible} />
@@ -32,4 +33,4 @@ function FeedRow({
   );
 }
 
-export {FeedRow};
+export { FeedRow };

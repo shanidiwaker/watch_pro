@@ -6,15 +6,16 @@ import {
   TouchableOpacity,
   TextInputProps,
 } from 'react-native';
-import {useColorModeValue, View} from 'native-base';
+import { useColorModeValue, View } from 'native-base';
 import Feather from 'react-native-vector-icons/Feather';
-import {theme} from '../../theme';
-import {Caption} from '../Typography';
+import { theme } from '../../theme';
+import { Caption } from '../Typography';
 
 export interface InputBox extends TextInputProps {
   placeholder: string;
   icon?: string;
   multiLine?: boolean;
+  maxLength?: number;
   rightIcon?: string;
   onRightPress?: () => void;
   error?: string | undefined | boolean;
@@ -30,6 +31,7 @@ function inputbox(props: InputBox) {
     onRightPress,
     rightIcon,
     multiLine,
+    maxLength,
     error,
   } = props;
   return (
@@ -81,6 +83,7 @@ function inputbox(props: InputBox) {
               theme.colors.appWhite[600],
             )}
             multiline={multiLine}
+            maxLength={15}
             {...props}
           />
           {rightIcon ? (
@@ -122,7 +125,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     width: '100%',
   },
-  rightStyle: {position: 'absolute', right: 10},
+  rightStyle: { position: 'absolute', right: 10 },
   err_title: {
     color: theme.colors.red[900],
     opacity: 0.6,

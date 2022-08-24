@@ -3,8 +3,8 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react/jsx-no-bind */
-import {Spinner, Text, useColorModeValue} from 'native-base';
-import React, {useState} from 'react';
+import { Spinner, Text, useColorModeValue } from 'native-base';
+import React, { useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -15,18 +15,18 @@ import {
   TextInput,
 } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
-import {GiftedChat, Send, InputToolbar, Bubble} from 'react-native-gifted-chat';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import { GiftedChat, Send, InputToolbar, Bubble } from 'react-native-gifted-chat';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Error from '../../components/Error';
 import AppContainer from '../../components/AppContainer';
-import {IMessageReponse, useFetchMessages} from './Queries/useFetchMessages';
-import {useMessageOperations} from './Queries/useMessageOperations';
-import {RootStackParamList} from '../../navigation';
+import { IMessageReponse, useFetchMessages } from './Queries/useFetchMessages';
+import { useMessageOperations } from './Queries/useMessageOperations';
+import { RootStackParamList } from '../../navigation';
 import useUserInfo from '../../hooks/useUserInfo';
-import {theme} from '../../theme';
-import {Caption} from '../../components/Typography';
+import { theme } from '../../theme';
+import { Caption } from '../../components/Typography';
 import HeaderSimple from '../../components/HeaderSimple';
-import {textEllipsis, timeDiffCalc} from '../../utils';
+import { textEllipsis, timeDiffCalc } from '../../utils';
 
 interface IUserChat {
   _id: string;
@@ -46,17 +46,17 @@ export type MessageScreenProps = NativeStackScreenProps<
 >;
 
 function ChatDetails(props1: MessageScreenProps) {
-  const {route} = props1;
+  const { route } = props1;
   const [chat, setChat] = React.useState<IMessageChat[]>([]);
-  const {user} = useUserInfo();
-  console.log("user",user)
+  const { user } = useUserInfo();
+  console.log("user", user)
   const {
     data: messagesList,
     isLoading,
     error,
     refetch,
   } = useFetchMessages(Number(route?.params.user_id), user?.id);
-  const {sendMessage} = useMessageOperations();
+  const { sendMessage } = useMessageOperations();
   const [msg, setMsg] = useState('');
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -78,16 +78,18 @@ function ChatDetails(props1: MessageScreenProps) {
   }, [refetch]);
   React.useEffect(() => {
     if (messagesList) {
+      console.log('messagesList', messagesList)
       const tempList: IMessageChat[] = [];
       messagesList?.data?.map((message: IMessageReponse) => {
+        console.log('messages', message?.sender)
         tempList.push({
           _id: message.id,
           text: message.text,
           createdAt: message.created_at,
           user: {
-            _id: message.user.id,
-            name: message.user.name,
-            avatar: message.user.avtar,
+            _id: message.sender.id,
+            name: message.sender.name,
+            avatar: message.sender.avtar,
           },
         });
         return message;
@@ -111,14 +113,14 @@ function ChatDetails(props1: MessageScreenProps) {
 
   function renderInput(props: any) {
     return (
-      <View style={{padding: 40}}>
+      <View style={{ padding: 40 }}>
         <InputToolbar
           containerStyle={{
             backgroundColor: bgColor,
             color: textColor,
             borderRadius: 10,
           }}
-          textInputStyle={[styles.textInput, {color: textColor}]}
+          textInputStyle={[styles.textInput, { color: textColor }]}
           {...props}
         />
       </View>
@@ -213,7 +215,7 @@ function ChatDetails(props1: MessageScreenProps) {
           inverted
           showsVerticalScrollIndicator={false}
           // style={{width: 'auto'}}
-          renderItem={({item, index}) => {
+          renderItem={({ item, index }) => {
             console.log(`item`, JSON.stringify(item, null, 2));
 
             return (
@@ -233,7 +235,7 @@ function ChatDetails(props1: MessageScreenProps) {
                   },
                 ]}>
                 <Image
-                  source={{uri: item?.user?.avatar}}
+                  source={{ uri: item?.user?.avatar }}
                   style={{
                     height: 40,
                     width: 40,
@@ -271,7 +273,7 @@ function ChatDetails(props1: MessageScreenProps) {
                     }}>
                     {item.text}
                   </Text>
-                  <Text style={{fontSize: 13, color: textnameColor}}>
+                  <Text style={{ fontSize: 13, color: textnameColor }}>
                     {timeDiffCalc(item?.createdAt)}
                   </Text>
                 </View>
@@ -279,10 +281,10 @@ function ChatDetails(props1: MessageScreenProps) {
             );
           }}
 
-          // ListHeaderComponent={() => {
-          //     return (
-          //       )
-          // }}
+        // ListHeaderComponent={() => {
+        //     return (
+        //       )
+        // }}
         />
         <View
           style={{
@@ -294,7 +296,7 @@ function ChatDetails(props1: MessageScreenProps) {
             alignItems: 'center',
             paddingHorizontal: 5,
           }}>
-          <View style={{width: '85%'}}>
+          <View style={{ width: '85%' }}>
             <TextInput
               style={{
                 backgroundColor: theme.colors.gray[200],
@@ -365,7 +367,7 @@ function ChatDetails(props1: MessageScreenProps) {
 }
 
 const styles = StyleSheet.create({
-  innerContainer: {height: '100%', paddingHorizontal: 0, paddingBottom: 65},
+  innerContainer: { height: '100%', paddingHorizontal: 0, paddingBottom: 65 },
   // fullScreen: {
   //   width: '100%',
   //   height: '100%',

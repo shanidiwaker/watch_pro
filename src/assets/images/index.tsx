@@ -12,6 +12,7 @@ const images = {
   EYE: require('./eye.png'),
   CAMERA: require('./camera.png'),
   Gallry: require('./gallery.png'),
+  IMAGE_Gallry: require('./image-gallery.png'),
   SIGNUP_BACK: require('./signup_back.png'),
 
 };
